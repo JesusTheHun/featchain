@@ -10,7 +10,7 @@ export interface IssuerAsset {
     description: string;
     authorityUrl?: string;
     featTypes: {
-        [id: string]: FeatTypeAsset;
+        [id: string]: FeatType;
     }
 }
 
@@ -21,11 +21,11 @@ export interface CreateIssuerTransactionAsset {
     amount: bigint;
 }
 
-export interface FeatTypeAsset {
+export interface FeatType {
     id: string;
     title: string;
     description: string;
-    awarded: bigint;
+    awardCount: bigint;
 }
 
 export interface CreateFeatTypeTransactionAsset {
