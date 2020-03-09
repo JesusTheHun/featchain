@@ -92,7 +92,7 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
         }
 
         if (!this.IsIssuerAsset(sender.asset)) {
-            errors.push(new TransactionError());
+            errors.push(new TransactionError("You must register as an Issuer before registering a FeatType"));
             return errors;
         }
 
@@ -100,7 +100,13 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
             errors.push(new TransactionError("FeatType ID is already registered"));
         }
 
-        sender.asset = this.asset;
+        sender.asset.featTypes[this.asset.id] = {
+            id: this.asset.id,
+            title: this.asset.title,
+            description: this.asset.description,
+            awardCount: BigInt(0),
+        };
+
         sender.balance = new BigNum(sender.balance).sub(this.asset.amount.toString()).toString();
 
         store.account.set(this.senderId, sender);
@@ -112,10 +118,14 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
         const errors: transactions.TransactionError[] = [];
         const sender = store.account.get(this.senderId) as IssuerAccount;
 
-        sender.asset = {};
-        sender.balance = new BigNum(sender.balance).add(this.asset.amount.toString()).toString();
+        // Always true, used as type guard
+        if (this.IsIssuerAsset(sender.asset)) {
 
-        store.account.set(this.senderId, sender);
+            delete sender.asset.featTypes[this.asset.id];
+            sender.balance = new BigNum(sender.balance).add(this.asset.amount.toString()).toString();
+
+            store.account.set(this.senderId, sender);
+        }
 
         return errors;
     }
