@@ -2,7 +2,9 @@ import { transactions, validator as LiskValidator } from 'lisk-sdk';
 import fees from '../config/fees';
 import BigNum from '@liskhq/bignum';
 import { BaseTransaction } from '@liskhq/lisk-transactions';
-import {CreateFeatTypeTransactionAsset, IssuerAccount, IssuerAsset} from "../../typings/featchain";
+import {CreateFeatTypeTransactionAsset, IssuerAccount} from "../../typings/featchain";
+import {isIssuerAccount} from "../utils/type-utils";
+
 
 const { validator, isValidTransferAmount } = LiskValidator;
 const {
@@ -15,7 +17,7 @@ const {
 
 export const createFeatTypeAssetFormatSchema = {
     type: 'object',
-    required: ['title'],
+    required: ['id', 'title'],
     properties: {
         id: {
             type: 'string',
@@ -38,32 +40,22 @@ export const createFeatTypeAssetFormatSchema = {
 
 export class CreateFeatTypeTransaction extends BaseTransaction {
 
-    public readonly asset: CreateFeatTypeTransactionAsset;
+    public readonly asset: Readonly<CreateFeatTypeTransactionAsset>;
 
-    static TYPE = 1001;
+    static TYPE = 1002;
     static FEE = '0';
 
     protected validateAsset(): ReadonlyArray<transactions.TransactionError> {
 
         const schemaErrors = validator.validate(createFeatTypeAssetFormatSchema, this.asset);
-        const errors = convertToAssetError(
-            this.id,
-            schemaErrors,
-        ) as transactions.TransactionError[];
+        const errors = convertToAssetError(this.id, schemaErrors) as transactions.TransactionError[];
 
         if (!isValidTransferAmount(this.asset.amount.toString())) {
-            errors.push(
-                new TransactionError(
-                    'Amount must be a valid number in string format.',
-                    this.id,
-                    '.amount',
-                    this.asset.amount.toString(),
-                ),
-            );
+            errors.push(new TransactionError('Amount must be a valid number in string format.', this.id, '.amount', this.asset.amount.toString()));
         }
 
         if (this.asset.amount !== BigInt(fees.createFeatType)) {
-            errors.push(new transactions.TransactionError);
+            errors.push(new transactions.TransactionError(`You should send ${fees.createFeatType} tokens as part of this transaction`));
         }
 
         return errors;

@@ -34,7 +34,7 @@ export const createIssuerAssetFormatSchema = {
 
 export class CreateIssuerTransaction extends BaseTransaction {
 
-    public readonly asset: CreateIssuerTransactionAsset;
+    public readonly asset: Readonly<CreateIssuerTransactionAsset>;
 
     static TYPE = 1001;
     static FEE = '0';
@@ -42,24 +42,14 @@ export class CreateIssuerTransaction extends BaseTransaction {
     protected validateAsset(): ReadonlyArray<transactions.TransactionError> {
 
         const schemaErrors = validator.validate(createIssuerAssetFormatSchema, this.asset);
-        const errors = convertToAssetError(
-            this.id,
-            schemaErrors,
-        ) as transactions.TransactionError[];
+        const errors = convertToAssetError(this.id, schemaErrors) as transactions.TransactionError[];
 
         if (!isValidTransferAmount(this.asset.amount.toString())) {
-            errors.push(
-                new TransactionError(
-                    'Amount must be a valid number in string format.',
-                    this.id,
-                    '.amount',
-                    this.asset.amount.toString(),
-                ),
-            );
+            errors.push(new TransactionError('Amount must be a valid number in string format.', this.id, '.amount', this.asset.amount.toString()));
         }
 
         if (this.asset.amount !== BigInt(fees.createIssuer)) {
-            errors.push(new transactions.TransactionError);
+            errors.push(new transactions.TransactionError(`You should send ${fees.createIssuer} tokens as part of this transaction`));
         }
 
         return errors;
@@ -105,7 +95,7 @@ export class CreateIssuerTransaction extends BaseTransaction {
         const errors: transactions.TransactionError[] = [];
         const sender = store.account.get(this.senderId) as IssuerAccount;
 
-        sender.asset = {};
+        sender.asset = undefined;
         sender.balance = new BigNum(sender.balance).add(this.asset.amount.toString()).toString();
 
         store.account.set(this.senderId, sender);
