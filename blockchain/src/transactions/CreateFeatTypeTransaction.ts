@@ -69,10 +69,6 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
         ]);
     }
 
-    protected IsIssuerAsset(asset: object): asset is IssuerAsset {
-        return "featTypes" in asset;
-    }
-
     protected applyAsset(store: transactions.StateStore): ReadonlyArray<transactions.TransactionError> {
         const errors: transactions.TransactionError[] = [];
         const sender = store.account.get(this.senderId) as IssuerAccount;
@@ -83,7 +79,7 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
             errors.push(balanceError);
         }
 
-        if (!this.IsIssuerAsset(sender.asset)) {
+        if (!isIssuerAccount(sender)) {
             errors.push(new TransactionError("You must register as an Issuer before registering a FeatType"));
             return errors;
         }
@@ -111,8 +107,7 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
         const sender = store.account.get(this.senderId) as IssuerAccount;
 
         // Always true, used as type guard
-        if (this.IsIssuerAsset(sender.asset)) {
-
+        if (isIssuerAccount(sender)) {
             delete sender.asset.featTypes[this.asset.id];
             sender.balance = new BigNum(sender.balance).add(this.asset.amount.toString()).toString();
 
