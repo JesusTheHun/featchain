@@ -1,7 +1,7 @@
 import { Account } from '@liskhq/lisk-transactions';
 
 export type TxId = string;
-export type FeatTypeId = string;
+export type FeatTypeId = TxId;
 export type Address = string;
 
 export interface IssuerAccount extends Account {
@@ -47,14 +47,13 @@ export interface CreateIssuerTransactionAsset {
     title: string;
     description: string;
     authorityUrl?: string;
-    amount: bigint;
+    amount: string;
 }
 
 export interface CreateFeatTypeTransactionAsset {
-    id: string;
     title: string;
     description: string;
-    amount: bigint;
+    amount: string;
 }
 
 export interface AwardFeatTransactionAsset {
@@ -62,5 +61,5 @@ export interface AwardFeatTransactionAsset {
     addresses: Array<Address>;
     date: number;
     comment: string;
-    amount: bigint;
+    amount: string;
 }

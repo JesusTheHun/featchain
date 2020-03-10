@@ -17,12 +17,8 @@ const {
 
 export const createFeatTypeAssetFormatSchema = {
     type: 'object',
-    required: ['id', 'title'],
+    required: ['title'],
     properties: {
-        id: {
-            type: 'string',
-            minLength: 10,
-        },
         amount: {
             type: 'string',
             format: 'amount',
@@ -45,7 +41,7 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
     static TYPE = 1002;
     static FEE = '0';
 
-    protected validateAsset(): ReadonlyArray<transactions.TransactionError> {
+    validateAsset(): ReadonlyArray<transactions.TransactionError> {
 
         const schemaErrors = validator.validate(createFeatTypeAssetFormatSchema, this.asset);
         const errors = convertToAssetError(this.id, schemaErrors) as transactions.TransactionError[];
@@ -54,14 +50,14 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
             errors.push(new TransactionError('Amount must be a valid number in string format.', this.id, '.amount', this.asset.amount.toString()));
         }
 
-        if (this.asset.amount !== BigInt(fees.createFeatType)) {
-            errors.push(new transactions.TransactionError(`You should send ${fees.createFeatType} tokens as part of this transaction`));
+        if (this.asset.amount !== fees.createFeatType) {
+            errors.push(new transactions.TransactionError(`You should send ${fees.createFeatType} beddows as part of this transaction`));
         }
 
         return errors;
     }
 
-    public async prepare(store: transactions.StateStorePrepare): Promise<void> {
+    async prepare(store: transactions.StateStorePrepare): Promise<void> {
         await store.account.cache([
             {
                 address: this.senderId,
@@ -69,7 +65,7 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
         ]);
     }
 
-    protected applyAsset(store: transactions.StateStore): ReadonlyArray<transactions.TransactionError> {
+    applyAsset(store: transactions.StateStore): ReadonlyArray<transactions.TransactionError> {
         const errors: transactions.TransactionError[] = [];
         const sender = store.account.get(this.senderId) as IssuerAccount;
 
@@ -84,12 +80,12 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
             return errors;
         }
 
-        if (sender.asset.featTypes.hasOwnProperty(this.asset.id)) {
+        if (sender.asset.featTypes.hasOwnProperty(this.id)) {
             errors.push(new TransactionError("FeatType ID is already registered"));
         }
 
-        sender.asset.featTypes[this.asset.id] = {
-            id: this.asset.id,
+        sender.asset.featTypes[this.id] = {
+            id: this.id,
             title: this.asset.title,
             description: this.asset.description,
             awardCount: BigInt(0),
@@ -108,7 +104,7 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
 
         // Always true, used as type guard
         if (isIssuerAccount(sender)) {
-            delete sender.asset.featTypes[this.asset.id];
+            delete sender.asset.featTypes[this.id];
             sender.balance = new BigNum(sender.balance).add(this.asset.amount.toString()).toString();
 
             store.account.set(this.senderId, sender);

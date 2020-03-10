@@ -21,10 +21,6 @@ export const awardFeatAssetFormatSchema = {
     type: 'object',
     required: ['featTypeId', 'addresses'],
     properties: {
-        featTypeId: {
-            type: 'string',
-            minLength: 10,
-        },
         amount: {
             type: 'string',
             format: 'amount',
@@ -43,17 +39,19 @@ export class AwardFeatTransaction extends BaseTransaction {
     static TYPE = 1003;
     static FEE = '0';
 
-    protected validateAsset(): ReadonlyArray<transactions.TransactionError> {
+    validateAsset(): ReadonlyArray<transactions.TransactionError> {
 
         const schemaErrors = validator.validate(awardFeatAssetFormatSchema, this.asset);
         const errors = convertToAssetError(this.id, schemaErrors) as transactions.TransactionError[];
 
-        if (!isValidTransferAmount(this.asset.amount.toString())) {
+        if (!isValidTransferAmount(this.asset.amount)) {
             errors.push(new TransactionError('Amount must be a valid number in string format.', this.id, '.amount', this.asset.amount.toString()));
         }
 
-        if (this.asset.amount !== BigInt(fees.awardFeat)) {
-            errors.push(new transactions.TransactionError(`You should send ${fees.awardFeat} tokens as part of this transaction`));
+        const cost = BigInt(this.asset.addresses.length) * BigInt(fees.awardFeat);
+
+        if (this.asset.amount !== cost.toString()) {
+            errors.push(new transactions.TransactionError(`You should send ${cost} tokens as part of this transaction`));
         }
 
         if (this.asset.addresses.length === 0) {
@@ -63,19 +61,18 @@ export class AwardFeatTransaction extends BaseTransaction {
         return errors;
     }
 
-    public async prepare(store: StateStorePrepare): Promise<void> {
+    async prepare(store: StateStorePrepare): Promise<void> {
         await store.account.cache([{
             // @ts-ignore
             address_in: [this.senderId, ...this.asset.addresses],
         }]);
     }
 
-    protected applyAsset(store: transactions.StateStore): ReadonlyArray<transactions.TransactionError> {
+    applyAsset(store: transactions.StateStore): ReadonlyArray<transactions.TransactionError> {
         const errors: transactions.TransactionError[] = [];
         const sender = store.account.get(this.senderId) as IssuerAccount;
-        const totalCost = new BigNum(this.asset.amount.toString()).mul(this.asset.addresses.length);
 
-        const balanceError = verifyAmountBalance(this.id, sender, totalCost, this.fee);
+        const balanceError = verifyAmountBalance(this.id, sender, new BigNum(this.asset.amount), this.fee);
 
         if (balanceError) {
             errors.push(balanceError);
@@ -86,12 +83,13 @@ export class AwardFeatTransaction extends BaseTransaction {
             return errors;
         }
 
-        if (sender.asset.featTypes.hasOwnProperty(this.asset.featTypeId)) {
-            errors.push(new TransactionError("FeatType ID is already registered"));
+        if (!sender.asset.featTypes.hasOwnProperty(this.asset.featTypeId)) {
+            errors.push(new TransactionError("FeatType ID not found"));
+            return errors;
         }
 
-        sender.asset.featTypes[this.asset.featTypeId].awardCount++;
-        sender.balance = new BigNum(sender.balance).sub(totalCost).toString();
+        sender.asset.featTypes[this.asset.featTypeId].awardCount += BigInt(this.asset.addresses.length);
+        sender.balance = new BigNum(sender.balance).sub(this.asset.amount).toString();
 
         store.account.set(this.senderId, sender);
 
@@ -100,6 +98,12 @@ export class AwardFeatTransaction extends BaseTransaction {
 
             if (isIssuerAccount(awardReceiver)) {
                 errors.push(new TransactionError('Issuers cannot receive awards'));
+            }
+
+            if (awardReceiver.asset === undefined) {
+                awardReceiver.asset = {
+                    awardsReceived: {}
+                };
             }
 
             if(awardReceiver.asset.awardsReceived === undefined) {
@@ -122,9 +126,9 @@ export class AwardFeatTransaction extends BaseTransaction {
         const errors: transactions.TransactionError[] = [];
         const sender = store.account.get(this.senderId) as IssuerAccount;
 
-        const totalCost = new BigNum(this.asset.amount.toString()).mul(this.asset.addresses.length);
+        sender.balance = new BigNum(sender.balance).add(this.asset.amount).toString();
+        sender.asset.featTypes[this.asset.featTypeId].awardCount -= BigInt(this.asset.addresses.length);
 
-        sender.balance = new BigNum(sender.balance).add(totalCost).toString();
         store.account.set(this.senderId, sender);
 
         this.asset.addresses.forEach(address => {

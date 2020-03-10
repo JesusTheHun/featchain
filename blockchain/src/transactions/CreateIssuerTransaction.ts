@@ -39,7 +39,7 @@ export class CreateIssuerTransaction extends BaseTransaction {
     static TYPE = 1001;
     static FEE = '0';
 
-    protected validateAsset(): ReadonlyArray<transactions.TransactionError> {
+    validateAsset(): ReadonlyArray<transactions.TransactionError> {
 
         const schemaErrors = validator.validate(createIssuerAssetFormatSchema, this.asset);
         const errors = convertToAssetError(this.id, schemaErrors) as transactions.TransactionError[];
@@ -48,14 +48,14 @@ export class CreateIssuerTransaction extends BaseTransaction {
             errors.push(new TransactionError('Amount must be a valid number in string format.', this.id, '.amount', this.asset.amount.toString()));
         }
 
-        if (this.asset.amount !== BigInt(fees.createIssuer)) {
+        if (this.asset.amount !== fees.createIssuer) {
             errors.push(new transactions.TransactionError(`You should send ${fees.createIssuer} tokens as part of this transaction`));
         }
 
         return errors;
     }
 
-    public async prepare(store: transactions.StateStorePrepare): Promise<void> {
+    async prepare(store: transactions.StateStorePrepare): Promise<void> {
         await store.account.cache([
             {
                 address: this.senderId,
@@ -63,18 +63,18 @@ export class CreateIssuerTransaction extends BaseTransaction {
         ]);
     }
 
-    protected applyAsset(store: transactions.StateStore): ReadonlyArray<transactions.TransactionError> {
+    applyAsset(store: transactions.StateStore): ReadonlyArray<transactions.TransactionError> {
         const errors: transactions.TransactionError[] = [];
         const sender = store.account.get(this.senderId) as IssuerAccount;
 
-        const balanceError = verifyAmountBalance(
-            this.id,
-            sender,
-            new BigNum(this.asset.amount.toString()),
-            this.fee,
-        );
+        const balanceError = verifyAmountBalance(this.id, sender, new BigNum(this.asset.amount.toString()), this.fee);
+
         if (balanceError) {
             errors.push(balanceError);
+        }
+
+        if (sender.asset != undefined && Object.keys(sender.asset).length > 0) {
+            errors.push(new TransactionError("Only one issuer can be registered per account"));
         }
 
         sender.asset = {

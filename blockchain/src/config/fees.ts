@@ -1,6 +1,7 @@
+import {utils} from "@liskhq/lisk-transactions/dist-node";
 
 export default {
-    createIssuer: 5000,
-    createFeatType: 50,
-    awardFeat: 10,
+    createIssuer: utils.convertLSKToBeddows('5000'),
+    createFeatType: utils.convertLSKToBeddows('50'),
+    awardFeat: utils.convertLSKToBeddows('10'),
 }
