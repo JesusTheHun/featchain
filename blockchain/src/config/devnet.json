@@ -23,5 +23,19 @@
                 "DISTANCE": 3000000
             }
         }
+    },
+    "components": {
+        "logger": {
+            "fileLogLevel": "debug",
+            "logFileName": "logs/devnet/lisk.log",
+            "consoleLogLevel": "info"
+        },
+        "storage": {
+            "host": "192.168.64.5",
+            "port": 5432,
+            "database": "lisk_dev",
+            "user": "lisk",
+            "password": "password"
+        }
     }
 }
