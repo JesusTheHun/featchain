@@ -1,0 +1,13 @@
+{
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "react-app",
+    "./node_modules/react-redux-typescript-scripts/eslint.js",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "no-unused-vars": ["warn", { "vars": "local" }],
+    "no-unused-expressions": "warn",
+    "@typescript-eslint/no-empty-interface": "off"
+  }
+}
