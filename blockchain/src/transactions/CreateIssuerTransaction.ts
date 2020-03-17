@@ -1,10 +1,10 @@
-import { transactions, validator as LiskValidator } from 'lisk-sdk';
+import { validator, isValidTransferAmount } from '@liskhq/lisk-validator';
 import fees from '../config/fees';
 import BigNum from '@liskhq/bignum';
 import { BaseTransaction } from '@liskhq/lisk-transactions';
+import * as transactions from '@liskhq/lisk-transactions';
 import {CreateIssuerTransactionAsset, IssuerAccount, IssuerAsset} from "../../typings/featchain";
 
-const { validator, isValidTransferAmount } = LiskValidator;
 const {
     TransactionError,
     convertToAssetError,
