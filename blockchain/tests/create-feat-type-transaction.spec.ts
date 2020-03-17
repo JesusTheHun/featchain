@@ -68,15 +68,12 @@ describe('CreateFeatTypeTransaction', () => {
         };
 
         // Assert
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(
-            1,
-            mockedSenderAccount.address,
-            {
-                address: mockedSenderAccount.address,
-                balance: utils.convertLSKToBeddows('9950'),
-                asset: expectedAsset
-            }
-        );
+        expect(storeStub.account.set.mock.calls[0][0]).toEqual(mockedSenderAccount.address);
+        expect(storeStub.account.set.mock.calls[0][1]).toEqual({
+            address: mockedSenderAccount.address,
+            balance: utils.convertLSKToBeddows('9950'),
+            asset: expectedAsset
+        });
     });
 
     test('it should FAIL to apply the state to register the feat type into the non-issuer asset', async () => {
@@ -162,14 +159,11 @@ describe('CreateFeatTypeTransaction', () => {
         };
 
         // Assert
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(
-            1,
-            mockedSenderAccount.address,
-            {
-                address: mockedSenderAccount.address,
-                balance: utils.convertLSKToBeddows('10000'),
-                asset: expectedAsset
-            }
-        );
+        expect(storeStub.account.set.mock.calls[0][0]).toEqual(mockedSenderAccount.address);
+        expect(storeStub.account.set.mock.calls[0][1]).toEqual({
+            address: mockedSenderAccount.address,
+            balance: utils.convertLSKToBeddows('10000'),
+            asset: expectedAsset
+        });
     });
 });

@@ -114,9 +114,14 @@ describe('AwardFeatTransaction', () => {
         };
 
         // Assert
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(1, mockedSenderAccount.address, expectedSenderAccount);
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(2, mockedAwardAccount1.address, expectedAccount1);
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(3, mockedAwardAccount2.address, expectedAccount2);
+        expect(storeStub.account.set.mock.calls[0][0]).toEqual(mockedSenderAccount.address);
+        expect(storeStub.account.set.mock.calls[0][1]).toEqual(expectedSenderAccount);
+
+        expect(storeStub.account.set.mock.calls[1][0]).toEqual(mockedAwardAccount1.address);
+        expect(storeStub.account.set.mock.calls[1][1]).toEqual(expectedAccount1);
+
+        expect(storeStub.account.set.mock.calls[2][0]).toEqual(mockedAwardAccount2.address);
+        expect(storeStub.account.set.mock.calls[2][1]).toEqual(expectedAccount2);
     });
 
     test('it should FAIL apply the state if the award is not found', async () => {
@@ -358,9 +363,14 @@ describe('AwardFeatTransaction', () => {
         };
 
         // Assert
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(1, mockedSenderAccount.address, expectedSenderAccount);
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(2, mockedAwardAccount1.address, expectedAccount1);
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(3, mockedAwardAccount2.address, expectedAccount2);
+        expect(storeStub.account.set.mock.calls[0][0]).toEqual(mockedSenderAccount.address);
+        expect(storeStub.account.set.mock.calls[0][1]).toEqual(expectedSenderAccount);
+
+        expect(storeStub.account.set.mock.calls[1][0]).toEqual(mockedAwardAccount1.address);
+        expect(storeStub.account.set.mock.calls[1][1]).toEqual(expectedAccount1);
+
+        expect(storeStub.account.set.mock.calls[2][0]).toEqual(mockedAwardAccount2.address);
+        expect(storeStub.account.set.mock.calls[2][1]).toEqual(expectedAccount2);
     });
 
 });

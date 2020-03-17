@@ -55,15 +55,12 @@ describe('CreateIssuerTransaction', () => {
         };
 
         // Assert
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(
-            1,
-            mockedSenderAccount.address,
-            {
-                address: mockedSenderAccount.address,
-                balance: utils.convertLSKToBeddows('5000'),
-                asset: expectedAsset
-            }
-        );
+        expect(storeStub.account.set.mock.calls[0][0]).toEqual(mockedSenderAccount.address);
+        expect(storeStub.account.set.mock.calls[0][1]).toEqual({
+            address: mockedSenderAccount.address,
+            balance: utils.convertLSKToBeddows('5000'),
+            asset: expectedAsset
+        });
     });
 
     test('it should FAIL to apply the state to turn the account into an issuer - invalid amount', async () => {
@@ -163,14 +160,11 @@ describe('CreateIssuerTransaction', () => {
         const expectedAsset: IssuerAsset = undefined;
 
         // Assert
-        expect(storeStub.account.set).toHaveBeenNthCalledWith(
-            1,
-            mockedSenderAccount.address,
-            {
-                address: mockedSenderAccount.address,
-                balance: utils.convertLSKToBeddows('10000'),
-                asset: expectedAsset
-            }
-        );
+        expect(storeStub.account.set.mock.calls[0][0]).toEqual(mockedSenderAccount.address);
+        expect(storeStub.account.set.mock.calls[0][1]).toEqual({
+            address: mockedSenderAccount.address,
+            balance: utils.convertLSKToBeddows('10000'),
+            asset: expectedAsset
+        });
     });
 });
