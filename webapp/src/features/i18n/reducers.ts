@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
-import { createReducer } from 'typesafe-actions';
-import { setLanguage } from './actions';
-import {RootState} from "../../store/types";
+import {ActionType, createReducer} from 'typesafe-actions';
+import actions, { setLanguage } from './actions';
 
 export type I18nState = Readonly<{
   language: string;
@@ -11,8 +10,9 @@ export const initialState: I18nState = {
     language: navigator.language,
 };
 
-const reducer = combineReducers({
-  language: createReducer(initialState.language).handleAction(setLanguage, (state: RootState, action: ReturnType<typeof setLanguage>) => action.payload),
+const reducer = combineReducers<I18nState, ActionType<typeof actions>>({
+  language: createReducer(initialState.language)
+      .handleAction(setLanguage, (state, action) => action.payload),
 });
 
 export default reducer;

@@ -3,6 +3,7 @@ import {APIClient} from "@liskhq/lisk-api-client";
 import {CreateIssuerTransaction, IssuerAccount} from "featchain-transactions";
 import {convertLSKToBeddows} from "@liskhq/lisk-transactions/dist-node/utils";
 import {APIResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
+import {CreateIssuerActionPayload} from "../../features/featchain/actions/issuer";
 
 const { EPOCH_TIME } = require('@liskhq/lisk-constants');
 const {getNetworkIdentifier} = require('@liskhq/lisk-cryptography');
@@ -24,21 +25,21 @@ export function fetchIssuer(address: string): Promise<IssuerAccount> {
   return client.accounts.get({ address }).then(r => r.data as IssuerAccount);
 }
 
-export function createIssuer(passphrase: string, title: string, description: string, authorityUrl: string): Promise<APIResponse> {
+export function createIssuer(issuerActionPayload: CreateIssuerActionPayload): Promise<APIResponse> {
 
   const transactionPayload: CreateIssuerPayload = {
     networkIdentifier,
     timestamp: getBlockchainTimestamp(),
     asset: {
       amount: convertLSKToBeddows('5000'),
-      title,
-      description,
-      authorityUrl,
+      title: issuerActionPayload.title,
+      description: issuerActionPayload.description,
+      authorityUrl: issuerActionPayload.authorityUrl,
     }
   };
 
   const transaction = new CreateIssuerTransaction(transactionPayload);
-  transaction.sign(passphrase);
+  transaction.sign(issuerActionPayload.passphrase);
 
   const client = APIClient.createMainnetAPIClient();
   return client.transactions.broadcast(transaction.toJSON());

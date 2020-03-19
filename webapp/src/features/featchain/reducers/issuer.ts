@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import issuerActions from "../actions/issuer";
+import {createIssuerAsync, fetchIssuerAsync} from "../actions/issuer";
 import {createReducer} from "typesafe-actions";
-import {RootState} from "../../../store/types";
+import {RootState} from "FeatchainTypes";
 import {IssuerAccount} from "../../../../../blockchain/typings/featchain";
 
 export type IssuerState = Readonly<{
@@ -16,14 +16,15 @@ export const initialState: IssuerState = {
 
 const reducer = combineReducers({
     isLoading: createReducer(initialState.isLoading)
-        .handleAction([issuerActions.fetch.request, issuerActions.create.request], () => true)
+        .handleAction([fetchIssuerAsync.request, createIssuerAsync.request], () => true)
         .handleAction([
-            issuerActions.fetch.success,
-            issuerActions.fetch.failure,
-            issuerActions.create.success,
-            issuerActions.create.failure,
+            fetchIssuerAsync.success,
+            fetchIssuerAsync.failure,
+            createIssuerAsync.success,
+            createIssuerAsync.failure,
         ], () => false),
-    entity: createReducer(initialState.entity).handleAction(issuerActions.fetch.success, (state: RootState, action: ReturnType<typeof issuerActions.fetch.success>) => action.payload),
+    entity: createReducer(initialState.entity)
+        .handleAction(fetchIssuerAsync.success, (state: RootState, action: ReturnType<typeof fetchIssuerAsync.success>) => action.payload),
 });
 
 export default reducer;

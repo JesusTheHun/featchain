@@ -4,6 +4,7 @@
   "private": true,
   "main": "src/index.tsx",
   "dependencies": {
+    "@ant-design/icons": "^4.0.3",
     "@babel/polyfill": "^7.8.3",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
@@ -22,7 +23,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/react-redux": "7.0.8",
     "@types/react-router-dom": "4.3.2",
-    "antd": "^3.26.7",
+    "antd": "^4.0.3",
     "axios": "^0.19.1",
     "babel-plugin-react-intl": "^5.1.18",
     "connected-react-router": "latest",

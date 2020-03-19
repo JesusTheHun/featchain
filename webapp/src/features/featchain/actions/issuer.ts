@@ -1,20 +1,22 @@
 import { createAsyncAction} from 'typesafe-actions';
-import {CreateIssuerPayload, LiskBlockchainError} from "../../../services/featchain/types";
 import {IssuerAccount} from "../../../../../blockchain/typings/featchain";
+import {APIResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
+
+export type CreateIssuerActionPayload = {
+    passphrase: string;
+    title: string;
+    description: string;
+    authorityUrl: string;
+};
 
 export const fetchIssuerAsync = createAsyncAction(
     'FETCH_ISSUER_REQUEST',
     'FETCH_ISSUER_SUCCESS',
     'FETCH_ISSUER_FAILURE'
-)<string, IssuerAccount, LiskBlockchainError>();
+)<string, IssuerAccount, APIResponse>();
 
 export const createIssuerAsync = createAsyncAction(
     'CREATE_ISSUER_REQUEST',
     'CREATE_ISSUER_SUCCESS',
     'CREATE_ISSUER_FAILURE'
-)<CreateIssuerPayload, IssuerAccount, LiskBlockchainError>();
-
-export default {
-    fetch: fetchIssuerAsync,
-    create: createIssuerAsync,
-};
+)<CreateIssuerActionPayload, APIResponse, APIResponse>();

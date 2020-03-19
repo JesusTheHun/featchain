@@ -2,6 +2,8 @@
 
 //$global-link-color: #DA7D02;
 
+$padding-small-padding: 40px;
+
 // 2. Import default variables and available mixins.
 @import "~uikit/src/scss/variables-theme.scss";
 @import "~uikit/src/scss/mixins-theme.scss";
@@ -12,3 +14,7 @@
 // 4. Import UIkit.
 @import '~uikit/src/scss/uikit-theme';
 @import '~antd/dist/antd.css';
+
+.root {
+  height: 100%;
+}

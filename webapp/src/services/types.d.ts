@@ -1,1 +1,3 @@
-export type Services = typeof import('./index').default;
+declare module 'FeatchainTypes' {
+    export type Services = typeof import('./index').default;
+}

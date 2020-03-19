@@ -6,12 +6,8 @@ import { routerMiddleware as createRouterMiddleware } from 'connected-react-rout
 import { composeEnhancers } from './utils';
 import createRootReducer from './reducers';
 import services from '../services';
-import { RootAction, RootState } from './types';
-import { Services } from '../services/types';
+import { RootAction, RootState, Services } from 'FeatchainTypes';
 import rootEpic from './epics';
-
-// browser history
-export const history = createBrowserHistory();
 
 export const epicMiddleware = createEpicMiddleware<
   RootAction,
@@ -22,17 +18,12 @@ export const epicMiddleware = createEpicMiddleware<
   dependencies: services,
 });
 
-const routerMiddleware = createRouterMiddleware(history);
-
-// configure middlewares
-const middlewares = [epicMiddleware, routerMiddleware];
-// compose enhancers
+export const history = createBrowserHistory();
+const middlewares = [createRouterMiddleware(history), epicMiddleware];
 const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 
-// create store
-const store: RootState = createStore(createRootReducer(history), enhancer);
+const store = createStore(createRootReducer(history), enhancer);
 
 epicMiddleware.run(rootEpic);
 
-// export store singleton instance
 export default store;
