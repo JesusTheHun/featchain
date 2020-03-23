@@ -47,10 +47,11 @@
     "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
     "typesafe-actions": "^5.1.0",
-    "typescript": "~3.7.2",
+    "typescript": "^3.7.2",
     "uikit": "^3.3.0",
     "utility-types": "^3.10.0",
-    "yup": "^0.28.0"
+    "yup": "^0.28.0",
+      "@liskhq/lisk-client": "latest"
   },
   "scripts": {
     "start": "react-app-rewired start",

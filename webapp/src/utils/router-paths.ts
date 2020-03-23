@@ -2,6 +2,9 @@ const pathsMap = {
   home: () => '/',
   authority: () => '/authority',
   verify: () => '/verify',
+  createAccount: () => '/createAccount',
+  signIn: () => '/signIn',
+  account: () => '/account',
   // editArticle: (articleId: string) => `/articles/${articleId}/edit`,
 };
 type PathsMap = typeof pathsMap;

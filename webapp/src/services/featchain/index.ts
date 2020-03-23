@@ -1,9 +1,8 @@
-import {CreateIssuerPayload} from "./types";
+import {CreateIssuerPayload, CreateIssuerActionPayload, AccountDetails} from "FeatchainTypes";
 import {APIClient} from "@liskhq/lisk-api-client";
 import {CreateIssuerTransaction, IssuerAccount} from "featchain-transactions";
 import {convertLSKToBeddows} from "@liskhq/lisk-transactions/dist-node/utils";
 import {APIResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
-import {CreateIssuerActionPayload} from "../../features/featchain/actions/issuer";
 
 const { EPOCH_TIME } = require('@liskhq/lisk-constants');
 const {getNetworkIdentifier} = require('@liskhq/lisk-cryptography');
@@ -19,6 +18,11 @@ const getBlockchainTimestamp = () => {
   const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
   return  parseInt(inSeconds);
 };
+
+export function fetchAccountDetails(address: string): Promise<AccountDetails> {
+  const client = APIClient.createMainnetAPIClient();
+  return client.accounts.get({ address }).then(r => r.data as AccountDetails);
+}
 
 export function fetchIssuer(address: string): Promise<IssuerAccount> {
   const client = APIClient.createMainnetAPIClient();

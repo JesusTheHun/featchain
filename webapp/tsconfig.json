@@ -1,12 +1,12 @@
 {
   "include": [
       "src",
-      "typings",
-      "node_modules/typescript/lib/lib.dom.d.ts"
+      "typings"
   ],
   "exclude": ["src/**/*.spec.*"],
   "extends": "./node_modules/react-redux-typescript-scripts/tsconfig.json",
   "compilerOptions": {
-    "lib": ["es2019"]
+    "lib": ["dom", "es2019"],
+    "jsx": "react"
   }
 }

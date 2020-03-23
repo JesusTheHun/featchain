@@ -12,7 +12,14 @@ $padding-small-padding: 40px;
 //@mixin hook-card() { color: #000; }
 
 // 4. Import UIkit.
-@import '~uikit/src/scss/uikit-theme';
+//@import '~uikit/src/scss/uikit-theme';
+
+@import '~uikit/src/scss/components/align';
+@import '~uikit/src/scss/components/text';
+@import '~uikit/src/scss/components/height';
+@import '~uikit/src/scss/components/margin';
+@import '~uikit/src/scss/components/padding';
+
 @import '~antd/dist/antd.css';
 
 .root {

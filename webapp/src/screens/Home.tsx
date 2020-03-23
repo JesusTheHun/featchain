@@ -16,6 +16,7 @@ class Home extends React.Component<Props, State> {
       <Typography.Title className={'uk-text-center'}>
         <FormattedMessage id="hi" defaultMessage={"Featchain"}/>
       </Typography.Title>
+
       <Typography.Title className={'uk-text-center'} level={2}>
         <FormattedMessage id="hi" defaultMessage={"The achievement blockchain"}/>
       </Typography.Title>
@@ -23,7 +24,7 @@ class Home extends React.Component<Props, State> {
       <Typography.Paragraph className={'uk-text-center'}>
         Something something
       </Typography.Paragraph>
-    </MainLayout>;
+    </MainLayout>
   }
 }
 
