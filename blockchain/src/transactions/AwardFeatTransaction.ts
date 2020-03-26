@@ -128,7 +128,11 @@ export class AwardFeatTransaction extends BaseTransaction {
         const sender = store.account.get(this.senderId) as IssuerAccount;
 
         sender.balance = new BigNum(sender.balance).add(this.asset.amount).toString();
-        sender.asset.featTypes[this.asset.featTypeId].awardCount -= BigInt(this.asset.addresses.length);
+
+        let awardCount = BigInt(sender.asset.featTypes[this.asset.featTypeId].awardCount);
+        awardCount -= BigInt(this.asset.addresses.length);
+
+        sender.asset.featTypes[this.asset.featTypeId].awardCount = awardCount.toString();
 
         store.account.set(this.senderId, sender);
 

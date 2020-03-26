@@ -87,7 +87,7 @@ export class CreateFeatTypeTransaction extends BaseTransaction {
             id: this.id,
             title: this.asset.title,
             description: this.asset.description,
-            awardCount: BigInt(0),
+            awardCount: '0',
         };
 
         sender.balance = new BigNum(sender.balance).sub(this.asset.amount.toString()).toString();

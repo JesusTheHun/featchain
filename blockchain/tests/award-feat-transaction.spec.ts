@@ -39,7 +39,7 @@ describe('AwardFeatTransaction', () => {
                         id: "someFeatType",
                         title: "You've been a good boy",
                         description: "Here is a sugar",
-                        awardCount: BigInt(0)
+                        awardCount: '0'
                     }
                 }
             }
@@ -85,7 +85,7 @@ describe('AwardFeatTransaction', () => {
             balance: utils.convertLSKToBeddows('9980'),
         };
 
-        expectedSenderAccount.asset.featTypes.someFeatType.awardCount = BigInt(2);
+        expectedSenderAccount.asset.featTypes.someFeatType.awardCount = '2';
 
         const expectedAccount1: Partial<PersonAccount> = {
             ...mockedAwardAccount1,
@@ -148,7 +148,7 @@ describe('AwardFeatTransaction', () => {
                         id: "someFeatType",
                         title: "You've been a good boy",
                         description: "Here is a sugar",
-                        awardCount: BigInt(0)
+                        awardCount: '0'
                     }
                 }
             }
@@ -221,7 +221,7 @@ describe('AwardFeatTransaction', () => {
                         id: "someFeatType",
                         title: "You've been a good boy",
                         description: "Here is a sugar",
-                        awardCount: BigInt(0)
+                        awardCount: '0'
                     }
                 }
             }
@@ -278,7 +278,7 @@ describe('AwardFeatTransaction', () => {
                         id: "someFeatType",
                         title: "You've been a good boy",
                         description: "Here is a sugar",
-                        awardCount: BigInt(0)
+                        awardCount: '0'
                     }
                 }
             }
@@ -340,7 +340,7 @@ describe('AwardFeatTransaction', () => {
             balance: utils.convertLSKToBeddows('10000'),
         };
 
-        expectedSenderAccount.asset.featTypes.someFeatType.awardCount = BigInt(0);
+        expectedSenderAccount.asset.featTypes.someFeatType.awardCount = '0';
 
         const expectedAccount1: Partial<PersonAccount> = {
             ...mockedAwardAccount1,

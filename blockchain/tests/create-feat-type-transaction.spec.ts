@@ -1,4 +1,4 @@
-import { CreateFeatTypeTransaction } from '../src/transactions/CreateFeatTypeTransaction';
+import { CreateFeatTypeTransaction } from '../src/transactions';
 import {CreateFeatTypeTransactionAsset, IssuerAccount, IssuerAsset, PersonAccount} from "../typings/featchain";
 
 import { utils } from '@liskhq/lisk-transactions';
@@ -62,7 +62,7 @@ describe('CreateFeatTypeTransaction', () => {
                     id: "foo",
                     title: "You've been a good boy",
                     description: "Here is a sugar",
-                    awardCount: BigInt(0)
+                    awardCount: '0'
                 }
             },
         };
@@ -131,7 +131,7 @@ describe('CreateFeatTypeTransaction', () => {
                         id: "foo",
                         title: "You've been a good boy",
                         description: "Here is a sugar",
-                        awardCount: BigInt(0)
+                        awardCount: '0'
                     }
                 },
             }

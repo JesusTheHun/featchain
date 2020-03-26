@@ -1,6 +1,7 @@
 import {CreateIssuerTransaction} from './CreateIssuerTransaction';
 import {CreateFeatTypeTransaction} from './CreateFeatTypeTransaction';
 import {AwardFeatTransaction} from "./AwardFeatTransaction";
+
 import {
     TxId,
     FeatTypeId,
@@ -15,6 +16,8 @@ import {
     CreateFeatTypeTransactionAsset,
     AwardFeatTransactionAsset,
 } from '../../typings/featchain';
+
+import fees from '../config/fees';
 
 export {
     CreateIssuerTransaction,
@@ -32,4 +35,5 @@ export {
     CreateIssuerTransactionAsset,
     CreateFeatTypeTransactionAsset,
     AwardFeatTransactionAsset,
+    fees,
 }

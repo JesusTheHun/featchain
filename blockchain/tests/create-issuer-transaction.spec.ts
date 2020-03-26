@@ -1,4 +1,4 @@
-import { CreateIssuerTransaction } from '../src/transactions/CreateIssuerTransaction';
+import { CreateIssuerTransaction } from '../src/transactions';
 import {CreateIssuerTransactionAsset, IssuerAsset} from "../typings/featchain";
 
 import { utils } from '@liskhq/lisk-transactions';

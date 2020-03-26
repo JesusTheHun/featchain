@@ -1,8 +1,7 @@
 import { Application, genesisBlockDevnet, configDevnet } from 'lisk-sdk';
 import appConfig from './config/devnet.json';
-import {CreateIssuerTransaction} from "./transactions/CreateIssuerTransaction";
-import {CreateFeatTypeTransaction} from "./transactions/CreateFeatTypeTransaction";
-import {AwardFeatTransaction} from "./transactions/AwardFeatTransaction";
+import {CreateIssuerTransaction, CreateFeatTypeTransaction, AwardFeatTransaction} from "./transactions";
+import {FaucetTransaction} from "lisk-transaction-faucet/dist";
 
 const config = {...configDevnet, ...appConfig};
 
@@ -10,6 +9,7 @@ try {
 
     const app = new Application(genesisBlockDevnet, config);
 
+    app.registerTransaction(FaucetTransaction);
     app.registerTransaction(CreateIssuerTransaction);
     app.registerTransaction(CreateFeatTypeTransaction);
     app.registerTransaction(AwardFeatTransaction);

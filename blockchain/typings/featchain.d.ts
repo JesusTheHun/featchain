@@ -22,7 +22,7 @@ export interface FeatType {
     id: FeatTypeId;
     title: string;
     description: string;
-    awardCount: bigint;
+    awardCount: string;
 }
 
 export interface PersonAccount extends Account {

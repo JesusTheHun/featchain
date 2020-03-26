@@ -84,7 +84,7 @@ export class CreateIssuerTransaction extends BaseTransaction {
             featTypes: {},
         } as IssuerAsset;
 
-        sender.balance = new BigNum(sender.balance).sub(this.asset.amount.toString()).toString();
+        sender.balance = new BigNum(sender.balance).sub(this.asset.amount).toString();
 
         store.account.set(this.senderId, sender);
 
