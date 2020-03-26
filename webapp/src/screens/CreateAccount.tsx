@@ -5,7 +5,7 @@ import {Row, Typography, Button, Col} from 'antd';
 import {connect} from 'react-redux';
 import lisk from '@liskhq/lisk-client';
 import { SyncOutlined, LoginOutlined } from '@ant-design/icons';
-import {setAccountCredentials} from "../features/featchain/actions/account";
+import {faucetAsync, setAccountCredentials} from "../features/featchain/actions/account";
 import { AccountCredentials } from 'FeatchainTypes';
 import {withRouter, RouteComponentProps} from "react-router-dom";
 import {getPath} from "../utils/router-paths";
@@ -41,6 +41,11 @@ export class CreateAccount extends React.Component<Props, State> {
 
   login = () => {
       this.props.setAccountCredentials(this.state.generatedAccount);
+      this.props.faucet({
+        address: this.state.generatedAccount.address,
+        amount: '10000',
+        passphrase: this.state.generatedAccount.passphrase,
+      });
       this.props.history.push(getPath('account'));
   };
 
@@ -96,6 +101,7 @@ export class CreateAccount extends React.Component<Props, State> {
 const mapStateToProps = () => {};
 const mapDispatchToProps = {
   setAccountCredentials,
+  faucet: faucetAsync.request,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateAccount));

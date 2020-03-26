@@ -1,12 +1,22 @@
 const pathsMap = {
+
+  // public
+
   home: () => '/',
-  authority: () => '/authority',
+  authorites: () => '/authorities',
   verify: () => '/verify',
+  // editArticle: (articleId: string) => `/articles/${articleId}/edit`,
+
+  // private
+
   createAccount: () => '/createAccount',
   signIn: () => '/signIn',
   account: () => '/account',
-  // editArticle: (articleId: string) => `/articles/${articleId}/edit`,
+  becomeAuthority: () => '/account/becomeAuthority',
+  createFeatType: () => '/account/createFeatType',
+  award: (featTypeId: string) => `/account/award/${featTypeId}`,
 };
+
 type PathsMap = typeof pathsMap;
 
 export const getPath = <TRoute extends keyof PathsMap>(

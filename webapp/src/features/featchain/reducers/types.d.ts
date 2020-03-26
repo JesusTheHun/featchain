@@ -1,4 +1,4 @@
-import {IssuerAccount, PersonAccount} from "../../../../blockchain/typings/featchain";
+import {IssuerAccount, PersonAccount} from "../../../../../blockchain/typings/featchain";
 
 declare module "FeatchainTypes" {
     export type AccountCredentials = {
@@ -7,7 +7,5 @@ declare module "FeatchainTypes" {
         address: string;
     }
 
-    export type AccountDetails = {
-        details: PersonAccount | IssuerAccount;
-    }
+    export type AccountDetails = PersonAccount | IssuerAccount;
 }

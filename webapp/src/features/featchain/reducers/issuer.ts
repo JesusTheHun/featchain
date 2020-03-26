@@ -13,7 +13,7 @@ export const initialState: IssuerState = {
     entity: {} as IssuerAccount,
 };
 
-const reducer = combineReducers({
+export default combineReducers({
     isLoading: createReducer(initialState.isLoading)
         .handleAction([fetchIssuerAsync.request, createIssuerAsync.request], () => true)
         .handleAction([
@@ -25,5 +25,3 @@ const reducer = combineReducers({
     entity: createReducer(initialState.entity)
         .handleAction(fetchIssuerAsync.success, (state, action) => action.payload),
 });
-
-export default reducer;

@@ -8,6 +8,7 @@
     "rules": {
         "jsx-wrap-multiline": false,
         "jsx-boolean-value": false,
+        "jsx-curly-spacing": true,
         "semicolon": false,
         "quotemark": false,
         "object-literal-key-quotes": false,
@@ -18,7 +19,8 @@
         "no-empty-interface": false,
         "max-line-length": [true, {
             "limit": 240
-        }]
+        }],
+        "curly": [true, "ignore-same-line"]
     },
     "rulesDirectory": []
 }

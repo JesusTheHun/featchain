@@ -1,8 +1,5 @@
 declare module 'FeatchainTypes' {
-    export type CreateIssuerActionPayload = {
-        passphrase: string;
-        title: string;
-        description: string;
-        authorityUrl: string;
-    };
+    export type CreateIssuerActionPayload = CreateIssuerPayload;
+    export type CreateFeatTypeActionPayload = CreateFeatTypePayload;
+    export type FaucetActionPayload = FaucetPayload;
 }

@@ -10,9 +10,7 @@ export const initialState: I18nState = {
     language: navigator.language,
 };
 
-const reducer = combineReducers({
+export default  combineReducers({
   language: createReducer(initialState.language)
       .handleAction(setLanguage, (state, action) => action.payload),
 });
-
-export default reducer;
