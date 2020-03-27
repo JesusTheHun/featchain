@@ -1,4 +1,4 @@
-import {CreateIssuerTransactionPayload, FaucetTransactionPayload, CreateIssuerPayload, AccountDetails, FaucetPayload, CreateFeatTypePayload, CreateFeatTypeTransactionPayload} from "FeatchainTypes";
+import {CreateIssuerTransactionPayload, FaucetTransactionPayload, CreateIssuerPayload, AccountDetails, FaucetPayload, CreateFeatTypePayload, CreateFeatTypeTransactionPayload, AwardFeatTransactionPayload, AwardFeatPayload} from "FeatchainTypes";
 import {APIClient} from "@liskhq/lisk-api-client";
 import {CreateIssuerTransaction, CreateFeatTypeTransaction, IssuerAccount, fees} from "featchain-transactions";
 import {utils} from "@liskhq/lisk-transactions";
@@ -6,6 +6,7 @@ import {APIResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
 import {FaucetTransaction} from "lisk-transaction-faucet";
 import {EPOCH_TIME} from "@liskhq/lisk-constants";
 import {getNetworkIdentifier} from "@liskhq/lisk-cryptography";
+import {AwardFeatTransaction} from "featchain-transactions/dist/transactions";
 
 const networkIdentifier = getNetworkIdentifier(
     "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
@@ -69,6 +70,26 @@ export function createFeatType(payload: CreateFeatTypePayload): Promise<APIRespo
   };
 
   const transaction = new CreateFeatTypeTransaction(transactionPayload);
+  transaction.sign(payload.passphrase);
+
+  return client.transactions.broadcast(transaction.toJSON());
+}
+
+export function awardFeat(payload: AwardFeatPayload): Promise<APIResponse> {
+
+  const transactionPayload: AwardFeatTransactionPayload = {
+    networkIdentifier,
+    timestamp: getBlockchainTimestamp(),
+    asset: {
+      featTypeId: payload.featTypeId,
+      addresses: payload.addresses,
+      date: payload.date,
+      comment: payload.comment,
+      amount: payload.amount,
+    },
+  };
+
+  const transaction = new AwardFeatTransaction(transactionPayload);
   transaction.sign(payload.passphrase);
 
   return client.transactions.broadcast(transaction.toJSON());

@@ -13,6 +13,7 @@ import SignIn from "./screens/SignIn";
 import Account from "./screens/Account";
 import BecomeAuthority from "./screens/BecomeAuthority";
 import CreateFeatType from "./screens/CreateFeatType";
+import AwardFeat from "./screens/AwardFeat";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route exact path={getPath('becomeAuthority')} render={() => <BecomeAuthority />} />
             <Route exact path={getPath('createFeatType')} render={() => <CreateFeatType />} />
             <Route exact path={getPath('account')} render={() => <Account />} />
+            <Route exact path={getPath('award', ':featTypeId')} render={props => <AwardFeat {...props} />} />
             <Route render={() => <Http404/>} />
           </Switch>
         </ConnectedRouter>

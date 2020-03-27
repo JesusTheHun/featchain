@@ -5,12 +5,12 @@ import { Typography, Form, Input, Button } from 'antd';
 import {Col, Row} from "antd/es";
 import {connect} from 'react-redux';
 import { RootState } from 'FeatchainTypes';
-import _ from "lodash";
 import {getPath} from "../utils/router-paths";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {fees} from "featchain-transactions";
 import {utils} from "@liskhq/lisk-transactions";
 import {createIssuerAsync} from "../features/featchain/actions/issuer";
+import {isIssuerAccount} from "featchain-transactions/dist/utils/type-utils";
 
 type State = {
 };
@@ -20,8 +20,8 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & Ro
 export class BecomeAuthority extends React.Component<Props, State> {
 
   componentDidMount(): void {
-    if (!_.isString(this.props.account.address) || _.isEmpty(this.props.account.address)) {
-      this.props.history.push(getPath("signIn"));
+    if (isIssuerAccount(this.props.account.details)) {
+      this.props.history.push(getPath("account"));
       return;
     }
   }
