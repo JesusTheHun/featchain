@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/transactions/index.js",
-  "files": ["dist/transactions/index.d.ts", "../../typings/featchain.d.ts"],
+  "files": [
+    "dist/transactions/index.d.ts",
+    "../../typings/featchain.d.ts"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -4,6 +4,7 @@
   "description": "The achievement blockchain",
   "main": "dist/index.js",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node dist/index.js",
     "prebuild": "if test -d dist; then rm -r dist; fi; rm -f tsconfig.tsbuildinfo",
     "build": "tsc",
