@@ -1,4 +1,4 @@
-import { AwardFeatTransaction } from '../src/transactions/AwardFeatTransaction';
+import { AwardFeatTransaction } from '../src/transactions';
 import {AwardFeatTransactionAsset, IssuerAccount, PersonAccount} from "../typings/featchain";
 
 import { utils } from '@liskhq/lisk-transactions';
@@ -246,6 +246,30 @@ describe('AwardFeatTransaction', () => {
         expect(errors).toHaveLength(1);
     });
 
+
+    test('it should FAIL because of the invalid date', async () => {
+        // Arrange
+        const senderId = '16313739661670634666L';
+        const senderPublicKey = 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f';
+        const asset: any = {
+            featTypeId: 'someOtherFeatType',
+            addresses: ['a', 'b'],
+            comment: "Wassup dawg ?",
+            date: "hamburger",
+            amount: utils.convertLSKToBeddows('20'),
+        };
+
+        // Act
+        const tx = new AwardFeatTransaction({
+            id: "foo",
+            senderId,
+            senderPublicKey,
+            asset,
+        });
+
+        const validationErrors = tx.validateAsset();
+        expect(validationErrors).toHaveLength(1);
+    });
 
     test('it should undo the state to remove the award to the persons account', async () => {
         // Arrange
