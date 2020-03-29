@@ -14,5 +14,8 @@ export const fetchAccountDetailsAsync = createAsyncAction(
     'FETCH_ACCOUNT_FAILURE'
 )<string, AccountDetails, APIErrorResponse>();
 
+
+export const fetchAccountDetailsWish = createAction('FETCH_ACCOUNT_WISH')<string>();
+
 export const setAccountCredentials = createAction('SET_ACCOUNT')<AccountCredentials>();
 export const deleteAccountCredentials = createAction('DELETE_ACCOUNT')();

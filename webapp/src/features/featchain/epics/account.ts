@@ -1,14 +1,25 @@
 import { from, of } from 'rxjs';
-import {filter, switchMap, map, catchError, throttleTime} from 'rxjs/operators';
-import { isActionOf } from 'typesafe-actions';
+import {filter, switchMap, map, catchError, throttleTime, groupBy, mergeMap} from 'rxjs/operators';
+import {isActionOf} from 'typesafe-actions';
 import {RootEpic} from "FeatchainTypes";
-import {faucetAsync, fetchAccountDetailsAsync} from "../actions/account";
+import {faucetAsync, fetchAccountDetailsAsync, fetchAccountDetailsWish} from "../actions/account";
 import {notification} from "antd";
+
+
+export const fetchAccountDetailsWishEpic: RootEpic = (action$, state$, { featchain }) => {
+    return action$.pipe(
+        filter(isActionOf(fetchAccountDetailsWish)),
+        groupBy(action => action.payload),
+        mergeMap(group$ => group$.pipe(
+            throttleTime(3000),
+            map(action => fetchAccountDetailsAsync.request(action.payload))
+        ))
+    );
+};
 
 export const fetchAccountDetailsEpic: RootEpic = (action$, state$, { featchain }) => {
     return action$.pipe(
         filter(isActionOf(fetchAccountDetailsAsync.request)),
-        throttleTime(1000),
         switchMap(action =>
             from(featchain.fetchAccountDetails(action.payload)).pipe(
                 map(fetchAccountDetailsAsync.success),

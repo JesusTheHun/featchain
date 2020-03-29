@@ -3,12 +3,13 @@ import {PersonAccount} from "../../../blockchain/typings/featchain";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {getPath} from "../utils/router-paths";
 import {Empty, Row, Table} from "antd";
-import {fetchAccountDetailsAsync} from "../features/featchain/actions/account";
+import {fetchAccountDetailsWish} from "../features/featchain/actions/account";
 import {connect} from "react-redux";
 import { RootState } from 'FeatchainTypes';
 import _ from "lodash";
 import moment from "moment";
 import {isPersonAccount} from "featchain-transactions/dist/utils/type-utils";
+import {fetchTransactionsAsync} from "../features/featchain/actions/transaction";
 
 type State = {
 };
@@ -72,7 +73,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = {
-    fetchAccountDetails: fetchAccountDetailsAsync.request,
+    fetchAccountDetails: fetchAccountDetailsWish,
+    fetchTransactions: fetchTransactionsAsync.request,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FeatsReceived));

@@ -4,7 +4,7 @@ import {FeatType, IssuerAccount} from "../../../blockchain/typings/featchain";
 import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {getPath} from "../utils/router-paths";
 import {Button, Card, Empty, Row, Table} from "antd";
-import {fetchAccountDetailsAsync} from "../features/featchain/actions/account";
+import {fetchAccountDetailsWish} from "../features/featchain/actions/account";
 import {connect} from "react-redux";
 import {SyncOutlined} from "@ant-design/icons";
 import { RootState } from 'FeatchainTypes';
@@ -99,7 +99,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = {
-    fetchAccountDetails: fetchAccountDetailsAsync.request,
+    fetchAccountDetails: fetchAccountDetailsWish,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FeatTypes));
