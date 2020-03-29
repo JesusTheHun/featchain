@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import {Typography, Button} from 'antd';
+import {Typography, Button, Modal} from 'antd';
 import {connect} from 'react-redux';
 import {withRouter, RouteComponentProps} from "react-router-dom";
 import { RootState } from 'FeatchainTypes';
@@ -11,16 +11,29 @@ import {isIssuerAccount} from "featchain-transactions/dist/utils/type-utils";
 import FeatTypes from "../components/FeatTypes";
 import FeatsReceived from '../components/FeatsReceived';
 import AccountDetails from "../components/AccountDetails";
+import QRCodeModal from "../components/QRCodeModal";
+import { QrcodeOutlined } from '@ant-design/icons';
 
 type State = {
+  isModalOpen: boolean;
 };
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteComponentProps<any>;
 
 export class Account extends React.Component<Props, State> {
 
+  readonly state = {
+    isModalOpen: false,
+  };
+
   navigateToBecomeAuthority = () => {
     this.props.history.push(getPath('becomeAuthority'));
+  };
+
+  toggleModal = () => {
+    this.setState(state => ({
+      isModalOpen: !state.isModalOpen,
+    }));
   };
 
   render() {
@@ -32,6 +45,14 @@ export class Account extends React.Component<Props, State> {
         <Typography.Title className={'uk-text-center'}>
           <FormattedMessage id="hi" defaultMessage={"Your account"}/>
         </Typography.Title>
+
+        <div className="uk-flex-none">
+          <Button type='primary' icon={<QrcodeOutlined />} onClick={this.toggleModal}>Download your QRCode</Button>
+        </div>
+
+        <Modal title="Verify your account" visible={this.state.isModalOpen} footer={[]} onCancel={this.toggleModal}>
+          <QRCodeModal address={this.props.account.entity.address as string} />
+        </Modal>
 
         { !isIssuer && !this.props.account.waitingConversion ?
           <div className="uk-flex-none">

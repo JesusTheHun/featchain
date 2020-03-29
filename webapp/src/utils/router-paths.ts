@@ -5,7 +5,7 @@ const pathsMap = {
   home: () => '/',
   authorites: () => '/authorities',
   verify: () => '/verify',
-  // editArticle: (articleId: string) => `/articles/${articleId}/edit`,
+  verifyAccount: (address: string) => `/verify/${address}`,
 
   // private
 
