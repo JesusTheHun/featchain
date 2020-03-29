@@ -1,12 +1,12 @@
 import {
     CreateIssuerTransactionAsset,
     CreateFeatTypeTransactionAsset,
+    AwardFeatTransactionAsset,
     FeatTypeId, Address
-} from "../../../../blockchain/typings/featchain";
+} from "featchain-transactions";
 import {FaucetTransactionAsset} from "lisk-transaction-faucet";
 
 declare module 'FeatchainTypes' {
-    import {AwardFeatTransactionAsset} from "../../../../blockchain/typings/featchain";
     export type CreateIssuerPayload = {
         passphrase: string;
         title: string;

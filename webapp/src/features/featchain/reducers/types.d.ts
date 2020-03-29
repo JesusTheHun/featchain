@@ -1,4 +1,4 @@
-import {IssuerAccount, PersonAccount} from "../../../../../blockchain/typings/featchain";
+import {IssuerAccount, PersonAccount} from "featchain-transactions";
 
 declare module "FeatchainTypes" {
     export type AccountCredentials = {

@@ -1,15 +1,16 @@
 import React from "react";
-import {PersonAccount} from "../../../blockchain/typings/featchain";
+import {Award, PersonAccount} from "../../../blockchain/typings/featchain";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {getPath} from "../utils/router-paths";
-import {Empty, Row, Table} from "antd";
+import {Button, Card, Empty, Row, Table} from "antd";
 import {fetchAccountDetailsWish} from "../features/featchain/actions/account";
 import {connect} from "react-redux";
 import { RootState } from 'FeatchainTypes';
 import _ from "lodash";
 import moment from "moment";
 import {isPersonAccount} from "featchain-transactions/dist/utils/type-utils";
-import {fetchTransactionsAsync} from "../features/featchain/actions/transaction";
+import {CreateFeatTypeTransaction} from "featchain-transactions";
+import {SyncOutlined} from "@ant-design/icons/lib";
 
 type State = {
 };
@@ -41,7 +42,18 @@ export class FeatsReceived extends React.Component<Props, State> {
         if (!isPersonAccount(this.props.account.entity.details)) return null;
 
         const account = this.props.account.entity.details as PersonAccount;
-        const data = Object.values(account.asset.awardsReceived);
+        const data: Array<Award & { title: string }> = [];
+
+        Object.values(account.asset.awardsReceived).forEach(entry => {
+            const tx = this.props.transaction[entry.featTypeId] as CreateFeatTypeTransaction;
+
+            if (tx) {
+                data.push({
+                    ...entry,
+                    title: tx.asset.title,
+                });
+            }
+        });
 
         if (data.length === 0) return this.renderEmptyFeatList();
 
@@ -64,17 +76,23 @@ export class FeatsReceived extends React.Component<Props, State> {
             },
         ];
 
-        return <Table columns={columns} dataSource={data} pagination={data.length > 10 ? {} : false}/>;
+        return <Card
+            title="Feats received"
+            extra={<Button icon={<SyncOutlined spin={this.props.account.isLoading} />} onClick={this.refreshAccountDetails} />}
+            className="uk-margin-small-top"
+        >
+            <Table columns={columns} dataSource={data} pagination={data.length > 10 ? {} : false}/>
+        </Card>
     }
 }
 
 const mapStateToProps = (state: RootState) => ({
     account: state.featchain.account,
+    transaction: state.featchain.transaction.entities,
 });
 
 const mapDispatchToProps = {
     fetchAccountDetails: fetchAccountDetailsWish,
-    fetchTransactions: fetchTransactionsAsync.request,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FeatsReceived));

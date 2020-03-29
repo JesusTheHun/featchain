@@ -1,12 +1,11 @@
 import {CreateIssuerTransactionPayload, FaucetTransactionPayload, CreateIssuerPayload, AccountDetails, FaucetPayload, CreateFeatTypePayload, CreateFeatTypeTransactionPayload, AwardFeatTransactionPayload, AwardFeatPayload} from "FeatchainTypes";
 import {APIClient} from "@liskhq/lisk-api-client";
-import {CreateIssuerTransaction, CreateFeatTypeTransaction, IssuerAccount, fees} from "featchain-transactions";
+import {CreateIssuerTransaction, CreateFeatTypeTransaction, AwardFeatTransaction, fees} from "featchain-transactions";
 import {utils} from "@liskhq/lisk-transactions";
 import {APIResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
 import {FaucetTransaction} from "lisk-transaction-faucet";
 import {EPOCH_TIME} from "@liskhq/lisk-constants";
 import {getNetworkIdentifier} from "@liskhq/lisk-cryptography";
-import {AwardFeatTransaction} from "featchain-transactions/dist/transactions";
 
 const networkIdentifier = getNetworkIdentifier(
     "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
@@ -14,7 +13,6 @@ const networkIdentifier = getNetworkIdentifier(
 );
 
 const getBlockchainTimestamp = () => {
-  // check config file or curl localhost:4000/api/node/constants to verify your epoc time
   const millisSinceEpoc = Date.now() - EPOCH_TIME.getTime();
   const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
   return  parseInt(inSeconds);
@@ -24,18 +22,24 @@ const client = APIClient.createTestnetAPIClient({
   node: "http://localhost:4000",
 });
 
-export function fetchAccountDetails(address: string): Promise<AccountDetails> {
+export function fetchAccountDetails<T = AccountDetails>(address: string): Promise<T> {
   return client.accounts.get({ address }).then(r => {
-    const data = r.data as unknown[];
+    const data = r.data as T[];
 
-    if (data.length === 0) { throw new Error("Account not found"); }
+    if (data.length === 0) throw new Error("Account not found");
 
-    return data[0] as AccountDetails;
+    return data[0];
   });
 }
 
-export function fetchIssuer(address: string): Promise<IssuerAccount> {
-  return client.accounts.get({ address }).then(r => r.data as IssuerAccount);
+export function fetchTransaction<T>(id: string): Promise<T> {
+  return client.transactions.get({ id }).then(r => {
+    const data = r.data as T[];
+
+    if (data.length === 0) throw new Error("Transaction not found");
+
+    return data[0];
+  });
 }
 
 export function createIssuer(payload: CreateIssuerPayload): Promise<APIResponse> {

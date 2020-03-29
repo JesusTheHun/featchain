@@ -4,7 +4,9 @@ import {isActionOf} from 'typesafe-actions';
 import {RootEpic} from "FeatchainTypes";
 import {faucetAsync, fetchAccountDetailsAsync, fetchAccountDetailsWish} from "../actions/account";
 import {notification} from "antd";
-
+import {fetchTransactionAsync} from "../actions/transaction";
+import {isPersonAccount} from "featchain-transactions/dist/utils/type-utils";
+import {Award} from "featchain-transactions";
 
 export const fetchAccountDetailsWishEpic: RootEpic = (action$, state$, { featchain }) => {
     return action$.pipe(
@@ -22,7 +24,19 @@ export const fetchAccountDetailsEpic: RootEpic = (action$, state$, { featchain }
         filter(isActionOf(fetchAccountDetailsAsync.request)),
         switchMap(action =>
             from(featchain.fetchAccountDetails(action.payload)).pipe(
-                map(fetchAccountDetailsAsync.success),
+                switchMap(accountDetails => {
+
+                    const toDispatch = [];
+                    toDispatch.push(fetchAccountDetailsAsync.success(accountDetails));
+
+                    if (isPersonAccount(accountDetails)) {
+                        Object.values(accountDetails.asset.awardsReceived).forEach((award: Award) => {
+                            toDispatch.push(fetchTransactionAsync.request(award.featTypeId));
+                        });
+                    }
+
+                    return from(toDispatch);
+                }),
                 catchError(message => of(fetchAccountDetailsAsync.failure(message)))
             )
         )

@@ -5230,7 +5230,7 @@ fb-watchman@^2.0.0:
     bser "2.1.1"
 
 "featchain-transactions@file:../blockchain/src/transactions":
-  version "1.0.0"
+  version "1.0.1"
 
 figgy-pudding@^3.5.1:
   version "3.5.1"
