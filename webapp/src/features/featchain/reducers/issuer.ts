@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import {createIssuerAsync, fetchIssuerAsync} from "../actions/issuer";
 import {createReducer} from "typesafe-actions";
-import {IssuerAccount} from "../../../../../blockchain/typings/featchain";
+import {IssuerAccount} from "featchain-blockchain";
 
 export type IssuerState = Readonly<{
     readonly isLoading: boolean;

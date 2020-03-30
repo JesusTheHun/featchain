@@ -3,7 +3,7 @@ import {
     CreateFeatTypeTransactionAsset,
     AwardFeatTransactionAsset,
     FeatTypeId, Address
-} from "featchain-transactions";
+} from "featchain-blockchain";
 import {FaucetTransactionAsset} from "lisk-transaction-faucet";
 
 declare module 'FeatchainTypes' {

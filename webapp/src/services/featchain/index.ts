@@ -1,6 +1,6 @@
 import {CreateIssuerTransactionPayload, FaucetTransactionPayload, CreateIssuerPayload, AccountDetails, FaucetPayload, CreateFeatTypePayload, CreateFeatTypeTransactionPayload, AwardFeatTransactionPayload, AwardFeatPayload} from "FeatchainTypes";
 import {APIClient} from "@liskhq/lisk-api-client";
-import {CreateIssuerTransaction, CreateFeatTypeTransaction, AwardFeatTransaction, fees} from "featchain-transactions";
+import {CreateIssuerTransaction, CreateFeatTypeTransaction, AwardFeatTransaction, fees} from "featchain-blockchain";
 import {utils} from "@liskhq/lisk-transactions";
 import {APIResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
 import {FaucetTransaction} from "lisk-transaction-faucet";

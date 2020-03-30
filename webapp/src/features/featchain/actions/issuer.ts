@@ -1,4 +1,4 @@
-import {IssuerAccount} from "../../../../../blockchain/typings/featchain";
+import {IssuerAccount} from "featchain-blockchain";
 import {APIResponse, APIErrorResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
 import {createAsyncAction} from "typesafe-actions";
 import {AwardFeatActionPayload, CreateFeatTypeActionPayload, CreateIssuerActionPayload} from "FeatchainTypes";

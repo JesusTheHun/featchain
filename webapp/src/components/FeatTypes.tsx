@@ -1,6 +1,5 @@
 import React from "react";
-import {isIssuerAccount} from "featchain-transactions/dist/utils/type-utils";
-import {FeatType, IssuerAccount} from "../../../blockchain/typings/featchain";
+import {FeatType, IssuerAccount, isIssuerAccount} from "featchain-blockchain";
 import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {getPath} from "../utils/router-paths";
 import {Button, Card, Empty, Row, Table} from "antd";

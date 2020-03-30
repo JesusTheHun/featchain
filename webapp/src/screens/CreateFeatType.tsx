@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import {Row, Typography, Button, Col, Form, Input} from 'antd';
 import {connect} from 'react-redux';
 import {withRouter, RouteComponentProps} from "react-router-dom";
-import {fees} from "featchain-transactions";
+import {fees} from "featchain-blockchain";
 import {utils} from "@liskhq/lisk-transactions";
 import {createFeatTypeAsync} from "../features/featchain/actions/issuer";
 import { RootState } from 'FeatchainTypes';

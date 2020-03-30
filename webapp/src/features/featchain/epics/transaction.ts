@@ -5,7 +5,7 @@ import {RootEpic} from "FeatchainTypes";
 
 import {APIErrorResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
 import { fetchTransactionAsync } from '../actions/transaction';
-import {CreateFeatTypeTransaction} from "featchain-transactions";
+import {CreateFeatTypeTransaction} from "featchain-blockchain";
 
 export const fetchTransactionsEpic: RootEpic = (action$, state$, { featchain }) => {
     return action$.pipe(

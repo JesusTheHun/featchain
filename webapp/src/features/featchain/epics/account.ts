@@ -5,8 +5,7 @@ import {RootEpic} from "FeatchainTypes";
 import {faucetAsync, fetchAccountDetailsAsync, fetchAccountDetailsWish} from "../actions/account";
 import {notification} from "antd";
 import {fetchTransactionAsync} from "../actions/transaction";
-import {isPersonAccount} from "featchain-transactions/dist/utils/type-utils";
-import {Award} from "featchain-transactions";
+import {Award, isPersonAccount} from "featchain-blockchain";
 
 export const fetchAccountDetailsWishEpic: RootEpic = (action$, state$, { featchain }) => {
     return action$.pipe(

@@ -3,7 +3,7 @@ import {createReducer} from "typesafe-actions";
 import {deleteAccountCredentials, fetchAccountDetailsAsync, setAccountCredentials} from "../actions/account";
 import { AccountCredentials, AccountDetails } from 'FeatchainTypes';
 import {createIssuerAsync} from "../actions/issuer";
-import {isIssuerAccount} from "featchain-transactions/dist/utils/type-utils";
+import {isIssuerAccount} from "featchain-blockchain";
 
 export type AccountState = Readonly<{
     readonly isLoading: boolean;

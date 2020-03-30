@@ -4,14 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import {Row, Typography, Button, Col, Form, Input, DatePicker} from 'antd';
 import {connect} from 'react-redux';
 import {withRouter, RouteComponentProps, match} from "react-router-dom";
-import {fees} from "featchain-transactions";
+import {fees, FeatTypeId, IssuerAccount, isIssuerAccount} from "featchain-blockchain";
 import {utils} from "@liskhq/lisk-transactions";
 import {awardFeatAsync} from "../features/featchain/actions/issuer";
 import { RootState } from 'FeatchainTypes';
 import {getPath} from "../utils/router-paths";
-import {FeatTypeId, IssuerAccount} from "../../../blockchain/typings/featchain";
 import _ from "lodash";
-import {isIssuerAccount} from "featchain-transactions/dist/utils/type-utils";
 import {FormInstance} from "antd/es/form";
 import moment from "moment";
 

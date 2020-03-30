@@ -1,5 +1,5 @@
 import React from "react";
-import {Award, PersonAccount} from "../../../blockchain/typings/featchain";
+import {Award, PersonAccount, CreateFeatTypeTransaction, isPersonAccount} from "featchain-blockchain";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {getPath} from "../utils/router-paths";
 import {Button, Card, Empty, Row, Table} from "antd";
@@ -8,8 +8,6 @@ import {connect} from "react-redux";
 import { RootState } from 'FeatchainTypes';
 import _ from "lodash";
 import moment from "moment";
-import {isPersonAccount} from "featchain-transactions/dist/utils/type-utils";
-import {CreateFeatTypeTransaction} from "featchain-transactions";
 import {SyncOutlined} from "@ant-design/icons/lib";
 
 type State = {

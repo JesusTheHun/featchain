@@ -7,10 +7,9 @@ import {connect} from 'react-redux';
 import { RootState } from 'FeatchainTypes';
 import {getPath} from "../utils/router-paths";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {fees} from "featchain-transactions";
+import {fees, isIssuerAccount} from "featchain-blockchain";
 import {utils} from "@liskhq/lisk-transactions";
 import {createIssuerAsync} from "../features/featchain/actions/issuer";
-import {isIssuerAccount} from "featchain-transactions/dist/utils/type-utils";
 
 type State = {
 };
