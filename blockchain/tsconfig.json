@@ -12,11 +12,11 @@
         "resolveJsonModule": true,
         "sourceMap": true,
         "esModuleInterop": true,
-        "outDir": "./dist"
+        "outDir": "./dist",
+        "declaration": true
     },
     "include": [
         "src",
-        "typings",
         "node_modules/typescript/lib/lib.dom.d.ts"
     ],
     "exclude": ["dist", "node_modules", "src/transactions/dist", "src/transactions/node_modules"]

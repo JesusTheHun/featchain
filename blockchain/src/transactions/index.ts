@@ -17,6 +17,8 @@ import {
     AwardFeatTransactionAsset,
 } from '../../typings/featchain';
 
+import {isPersonAccount, isIssuerAccount} from "../utils/type-utils";
+
 import fees from '../config/fees';
 
 export {
@@ -36,4 +38,6 @@ export {
     CreateFeatTypeTransactionAsset,
     AwardFeatTransactionAsset,
     fees,
+    isPersonAccount,
+    isIssuerAccount,
 }
