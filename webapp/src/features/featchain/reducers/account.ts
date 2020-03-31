@@ -17,8 +17,8 @@ export const initialState: AccountState = {
     isLoading: false,
     waitingConversion: false,
     entity: {
-        passphrase: "shallow aspect ridge spend crowd beef true shine sudden dutch grab furnace",
-        address: "1021283338054737813L",
+        address: process.env.REACT_APP_FEATCHAIN_DEFAULT_ACCOUNT_ADDRESS,
+        passphrase: process.env.REACT_APP_FEATCHAIN_DEFAULT_ACCOUNT_PASSPHRASE,
     },
 };
 

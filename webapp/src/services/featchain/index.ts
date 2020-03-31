@@ -1,6 +1,6 @@
 import {CreateIssuerTransactionPayload, FaucetTransactionPayload, CreateIssuerPayload, AccountDetails, FaucetPayload, CreateFeatTypePayload, CreateFeatTypeTransactionPayload, AwardFeatTransactionPayload, AwardFeatPayload} from "FeatchainTypes";
 import {APIClient} from "@liskhq/lisk-api-client";
-import {CreateIssuerTransaction, CreateFeatTypeTransaction, AwardFeatTransaction, fees} from "featchain-blockchain";
+import {FeatTypeId, CreateIssuerTransaction, CreateFeatTypeTransaction, AwardFeatTransaction, fees, PersonAccount, IssuerAccount, Award} from "featchain-blockchain";
 import {utils} from "@liskhq/lisk-transactions";
 import {APIResponse} from "@liskhq/lisk-api-client/dist-node/api_types";
 import {FaucetTransaction} from "lisk-transaction-faucet";
@@ -40,6 +40,34 @@ export function fetchTransaction<T>(id: string): Promise<T> {
 
     return data[0];
   });
+}
+
+export async function fetchFeatTypeIssuer(featTypeId: FeatTypeId): Promise<IssuerAccount> {
+  const tx = await fetchTransaction<CreateFeatTypeTransaction>(featTypeId);
+  const account = await fetchAccountDetails<IssuerAccount>(tx.senderId);
+  return account;
+}
+
+export type FeatsReceived = {
+  [txId: string]: CreateFeatTypeTransaction;
+};
+
+export async function fetchFeatsReceived(address: string): Promise<{
+  account: AccountDetails;
+  featsReceived: FeatsReceived;
+}> {
+  const account = await fetchAccountDetails<PersonAccount>(address);
+
+  const p = Object.values(account.asset.awardsReceived).map((award: Award) => {
+    return fetchTransaction<CreateFeatTypeTransaction>(award.featTypeId);
+  });
+
+  const transactionsArray = await Promise.all(p);
+  const featsReceived: FeatsReceived = {};
+
+  transactionsArray.forEach(tx => featsReceived[tx.id] = tx);
+
+  return { account, featsReceived }
 }
 
 export function createIssuer(payload: CreateIssuerPayload): Promise<APIResponse> {

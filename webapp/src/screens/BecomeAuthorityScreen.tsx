@@ -16,7 +16,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteComponentProps<any>;
 
-export class BecomeAuthority extends React.Component<Props, State> {
+export class BecomeAuthorityScreen extends React.Component<Props, State> {
 
   componentDidMount(): void {
     if (isIssuerAccount(this.props.account.details)) {
@@ -118,4 +118,4 @@ const mapDispatchToProps = {
   createIssuer: createIssuerAsync.request,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BecomeAuthority));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BecomeAuthorityScreen));

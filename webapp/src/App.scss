@@ -20,9 +20,10 @@ $padding-small-padding: 40px;
 @import '~uikit/src/scss/components/height';
 @import '~uikit/src/scss/components/margin';
 @import '~uikit/src/scss/components/padding';
+@import '~uikit/src/scss/components/visibility';
 
 @import '~antd/dist/antd.css';
 
-.root {
+#root {
   height: 100%;
 }

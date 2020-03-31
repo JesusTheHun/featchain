@@ -16,7 +16,7 @@ type State = {
 
 type Props = typeof mapDispatchToProps & RouteComponentProps<any>;
 
-export class CreateAccount extends React.Component<Props, State> {
+export class CreateAccountScreen extends React.Component<Props, State> {
 
   readonly state = {
     generatedAccount: {
@@ -104,4 +104,4 @@ const mapDispatchToProps = {
   faucet: faucetAsync.request,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateAccount));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateAccountScreen));

@@ -70,7 +70,7 @@ export class Navbar extends React.Component<Props, State> {
         >
             <Menu.Item key="home"><Link to={getPath('home')}>Featchain</Link></Menu.Item>
             <Menu.Item key="authority"><Link to={getPath('becomeAuthority')}>Become an authority</Link></Menu.Item>
-            <Menu.Item key="verify"><Link to={getPath('verify')}>Verify an account</Link></Menu.Item>
+            <Menu.Item key="verifyAccount"><Link to={getPath('verifyAccount')}>Verify an account</Link></Menu.Item>
             {this.props.account.passphrase ? this.renderConnectedAccountMenu() : this.renderAnonymousAccountMenu()}
         </Menu>
     }

@@ -21,7 +21,7 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & Ro
   match: match<{ featTypeId: FeatTypeId }>;
 }
 
-export class AwardFeat extends React.Component<Props, State> {
+export class AwardFeatScreen extends React.Component<Props, State> {
 
   readonly state = {
     personCount: 0,
@@ -165,4 +165,4 @@ const mapDispatchToProps = {
   awardFeat: awardFeatAsync.request,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AwardFeat));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AwardFeatScreen));

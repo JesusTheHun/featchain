@@ -9,7 +9,7 @@ type Props = {
 type State = {
 };
 
-class Home extends React.Component<Props, State> {
+class HomeScreen extends React.Component<Props, State> {
 
   render() {
     return <MainLayout>
@@ -28,4 +28,4 @@ class Home extends React.Component<Props, State> {
   }
 }
 
-export default Home;
+export default HomeScreen;

@@ -3,31 +3,37 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Switch, Route } from 'react-router';
 
 import { history } from './store';
-import Home from './screens/Home';
-import Http404 from './screens/Http404';
+import HomeScreen from './screens/HomeScreen';
+import Http404Screen from './screens/Http404Screen';
 import { getPath } from './utils/router-paths';
 import './App.scss';
-
-import CreateAccount from "./screens/CreateAccount";
-import SignIn from "./screens/SignIn";
-import Account from "./screens/Account";
-import BecomeAuthority from "./screens/BecomeAuthority";
-import CreateFeatType from "./screens/CreateFeatType";
-import AwardFeat from "./screens/AwardFeat";
+import VerifyAccountScreen from "./screens/VerifyAccountScreen";
+import AwardFeatScreen from "./screens/AwardFeatScreen";
+import AccountScreen from "./screens/AccountScreen";
+import CreateFeatTypeScreen from "./screens/CreateFeatTypeScreen";
+import BecomeAuthorityScreen from "./screens/BecomeAuthorityScreen";
+import SignInScreen from "./screens/SignInScreen";
+import CreateAccountScreen from "./screens/CreateAccountScreen";
+import {FeatTypeScreen} from "./screens/FeatTypeScreen";
+import IssuerScreen from "./screens/IssuerScreen";
 
 class App extends Component {
   render() {
     return (
         <ConnectedRouter history={history}>
           <Switch>
-            <Route exact path={getPath('home')} render={() => <Home />} />
-            <Route exact path={getPath('createAccount')} render={() => <CreateAccount />} />
-            <Route exact path={getPath('signIn')} render={() => <SignIn />} />
-            <Route exact path={getPath('becomeAuthority')} render={() => <BecomeAuthority />} />
-            <Route exact path={getPath('createFeatType')} render={() => <CreateFeatType />} />
-            <Route exact path={getPath('account')} render={() => <Account />} />
-            <Route exact path={getPath('award', ':featTypeId')} render={props => <AwardFeat {...props} />} />
-            <Route render={() => <Http404/>} />
+            <Route exact path={getPath('home')} component={HomeScreen} />
+            <Route exact path={getPath('createAccount')} component={CreateAccountScreen} />
+            <Route exact path={getPath('signIn')} component={SignInScreen}/>
+            <Route exact path={getPath('becomeAuthority')} component={BecomeAuthorityScreen} />
+            <Route exact path={getPath('createFeatType')} component={CreateFeatTypeScreen} />
+            <Route exact path={getPath('account')} component={AccountScreen} />
+            <Route exact path={getPath('award', ':featTypeId')} component={AwardFeatScreen} />
+            <Route exact path={getPath('verifyAccount', ':address?')} component={VerifyAccountScreen} />
+            <Route exact path={getPath('featType', ':featTypeId?')} component={FeatTypeScreen} />
+            <Route exact path={getPath('authority', ':issuerId?')} component={IssuerScreen} />
+
+            <Route component={Http404Screen} />
           </Switch>
         </ConnectedRouter>
     );

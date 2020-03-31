@@ -1,11 +1,14 @@
+import {FeatTypeId} from "featchain-blockchain";
+
 const pathsMap = {
 
   // public
 
   home: () => '/',
   authorites: () => '/authorities',
-  verify: () => '/verify',
-  verifyAccount: (address: string) => `/verify/${address}`,
+  verifyAccount: (address: string = '') => `/verify${address ? '/' + address : ''}`,
+  featType: (featTypeId: FeatTypeId) => `/featType/${featTypeId}`,
+  authority: (issuerId: string) => `/authority/${issuerId}`,
 
   // private
 
@@ -19,11 +22,7 @@ const pathsMap = {
 
 type PathsMap = typeof pathsMap;
 
-export const getPath = <TRoute extends keyof PathsMap>(
-  route: TRoute,
-  ...params: Parameters<PathsMap[TRoute]>
-) => {
+export const getPath = <TRoute extends keyof PathsMap>(route: TRoute, ...params: Parameters<PathsMap[TRoute]>) => {
   const pathCb: (...args: any[]) => string = pathsMap[route];
-
   return pathCb(...params);
 };

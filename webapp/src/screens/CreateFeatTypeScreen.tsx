@@ -15,7 +15,7 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteComponentProps<any>;
 
-export class CreateFeatType extends React.Component<Props, State> {
+export class CreateFeatTypeScreen extends React.Component<Props, State> {
 
   onFinish = (values: any) => {
     this.props.createFeatType({
@@ -103,4 +103,4 @@ const mapDispatchToProps = {
   createFeatType: createFeatTypeAsync.request,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateFeatType));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateFeatTypeScreen));

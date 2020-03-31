@@ -3,16 +3,17 @@ import { FormattedMessage } from 'react-intl';
 import {Typography, Button, Modal} from 'antd';
 import {connect} from 'react-redux';
 import {withRouter, RouteComponentProps} from "react-router-dom";
-import { RootState } from 'FeatchainTypes';
+import { RootState, AccountDetails } from 'FeatchainTypes';
 import {fetchAccountDetailsAsync} from "../features/featchain/actions/account";
 import {getPath} from "../utils/router-paths";
 import MainLayout from "../layouts/MainLayout";
 import {isIssuerAccount} from "featchain-blockchain";
 import FeatTypes from "../components/FeatTypes";
 import FeatsReceived from '../components/FeatsReceived';
-import AccountDetails from "../components/AccountDetails";
+import AccountDetailsComponent from "../components/AccountDetails";
 import QRCodeModal from "../components/QRCodeModal";
 import { QrcodeOutlined } from '@ant-design/icons';
+import _ from "lodash";
 
 type State = {
   isModalOpen: boolean;
@@ -20,11 +21,18 @@ type State = {
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteComponentProps<any>;
 
-export class Account extends React.Component<Props, State> {
+export class AccountScreen extends React.Component<Props, State> {
 
   readonly state = {
     isModalOpen: false,
   };
+
+  componentDidMount() {
+    if (!_.isString(this.props.account.entity.passphrase) || _.isEmpty(this.props.account.entity.passphrase)) {
+      this.props.history.push(getPath("signIn"));
+      return;
+    }
+  }
 
   navigateToBecomeAuthority = () => {
     this.props.history.push(getPath('becomeAuthority'));
@@ -34,6 +42,10 @@ export class Account extends React.Component<Props, State> {
     this.setState(state => ({
       isModalOpen: !state.isModalOpen,
     }));
+  };
+
+  onRefresh = () => {
+    this.props.fetchAccountDetails(this.props.account.entity.address as string);
   };
 
   render() {
@@ -64,10 +76,15 @@ export class Account extends React.Component<Props, State> {
           }
         </div>
 
-        <AccountDetails />
+        <AccountDetailsComponent />
 
         { isIssuer || this.props.account.waitingConversion ? <FeatTypes /> : null }
-        { !isIssuer && !this.props.account.waitingConversion ? <FeatsReceived /> : null }
+        { !isIssuer && !this.props.account.waitingConversion ? <FeatsReceived
+            onRefresh={this.onRefresh}
+            isLoading={this.props.account.isLoading || this.props.transaction.isLoading}
+            account={this.props.account.entity.details as AccountDetails}
+            transactions={this.props.transaction.entities}
+        /> : null }
 
       </div>
     </MainLayout>;
@@ -76,10 +93,11 @@ export class Account extends React.Component<Props, State> {
 
 const mapStateToProps = (state: RootState) => ({
   account: state.featchain.account,
+  transaction: state.featchain.transaction,
 });
 
 const mapDispatchToProps = {
   fetchAccountDetails: fetchAccountDetailsAsync.request,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Account));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AccountScreen));
