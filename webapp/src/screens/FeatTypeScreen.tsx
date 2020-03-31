@@ -47,8 +47,6 @@ export class FeatTypeScreen extends React.Component<Props, State> {
     const {featTypeId} = this.props.match.params;
     const featType = this.state.featTypeIssuer.asset.featTypes[featTypeId];
 
-    this.state.featTypeIssuer.asset.authorityUrl = "http://www.google.fr";
-
     return <MainLayout>
       <Typography.Title className={'uk-text-center'}>
         {featType.title}
