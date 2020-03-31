@@ -1,9 +1,36 @@
-version: 3
-    services:
-        webapp:
-            image: jesusthehun/featchain-webapp
-            build: webapp
+version: '3'
+services:
+    webapp:
+        image: featchain-webapp
+        build: webapp
+        depends_on:
+          - blockchain
+        environment:
+            - 'REACT_APP_FEATCHAIN_BASEURL=${PUBLIC_API_URL}'
+        ports:
+        - '8080:4000'
 
-        blockchain:
-            image: jesusthehun/featchain-blockchain
-            build: blockchain
+    blockchain:
+        image: featchain-blockchain
+        build: blockchain
+        restart: unless-stopped
+        entrypoint: ["/home/lisk/wait-for-it.sh", "db:5432", "--", "node", "/home/lisk/lisk/dist/src/index.js"]
+        depends_on:
+          - db
+        environment:
+            - 'HTTP_API_PORT=4000'
+            - 'POSTGRES_HOST=db'
+            - 'POSTGRES_PORT=5432'
+            - 'POSTGRES_USER=lisk'
+            - 'POSTGRES_PASSWORD=password'
+            - 'POSTGRES_DB=lisk_dev'
+        ports:
+        - '4000:4000'
+
+    db:
+        image: postgres:10
+        environment:
+            - 'POSTGRES_PORT=5432'
+            - 'POSTGRES_USER=lisk'
+            - 'POSTGRES_PASSWORD=password'
+            - 'POSTGRES_DB=lisk_dev'

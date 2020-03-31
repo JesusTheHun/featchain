@@ -1,4 +1,4 @@
-{
+export default {
     "app": {
         "label": "featchain",
         "minVersion": "0.0.1",
@@ -31,11 +31,19 @@
             "consoleLogLevel": "info"
         },
         "storage": {
-            "host": "192.168.64.5",
-            "port": 5432,
-            "database": "lisk_dev",
-            "user": "lisk",
-            "password": "password"
+            "host": process.env.POSTGRES_HOST,
+            "port": Number(process.env.POSTGRES_PORT).valueOf(),
+            "database": process.env.POSTGRES_DB,
+            "user": process.env.POSTGRES_USER,
+            "password": process.env.POSTGRES_PASSWORD
+        },
+    },
+    "modules": {
+        "http_api": {
+            "access": {
+                "public": true,
+            },
+            "httpPort": Number(process.env.HTTP_API_PORT).valueOf()
         }
     }
 }

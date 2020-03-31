@@ -1,5 +1,11 @@
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config();
+}
+
 import { Application, genesisBlockDevnet, configDevnet } from 'lisk-sdk';
-import appConfig from './config/devnet.json';
+import appConfig from './config/devnet';
 import {CreateIssuerTransaction, CreateFeatTypeTransaction, AwardFeatTransaction} from "./transactions";
 import {FaucetTransaction} from "lisk-transaction-faucet/dist";
 
