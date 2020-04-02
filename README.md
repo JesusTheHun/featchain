@@ -17,7 +17,7 @@ Then :
 cd blockchain
 nvm use
 npm i
-npm start
+npm start.
 cd ../webapp
 yarn
 npm start
@@ -29,13 +29,12 @@ npm start
 docker-compose up -d
 ```
 
-If you use a docker machine and therefore you do not access containers services through `localhost`
+If you use a docker machine and therefore you do not access containers services through `localhost` you have to change the environment variable in `.env` to set the correct value.
 
 ```bash
 PUBLIC_API_URL=http://docker_machine:4000
 ```
  
-you have to change the environment variable in `.env` to set the correct value.
 
 ### Build With
 
