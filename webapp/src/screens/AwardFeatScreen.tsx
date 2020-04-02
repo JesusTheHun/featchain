@@ -56,7 +56,7 @@ export class AwardFeatScreen extends React.Component<Props, State> {
   getAddresses = (txt: string) => {
     if (!_.isString(txt)) return [];
 
-    return _.uniq(txt.split("\n").filter(entry => entry.length > 0));
+    return _.uniq(txt.split("\n").map(s => s.trim()).filter(entry => entry.length > 0));
   };
 
   onChange = (changedValues: any, allValues: any) => {

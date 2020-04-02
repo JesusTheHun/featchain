@@ -45,7 +45,7 @@ export class VerifyAccountScreen extends React.Component<Props, State> {
         fetchFeatsReceived(address).then(({account, featsReceived}) => {
           this.setState({ account, featsReceived })
         }).catch(err => notification.error({
-          message: "API error",
+          message: "Humm...",
           description: err.message,
           placement: "bottomRight",
         }));

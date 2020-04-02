@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLayout from '../layouts/MainLayout';
 import { FormattedMessage } from 'react-intl';
-import { Typography, Form, Input, Button } from 'antd';
+import {Typography, Form, Input, Button, notification} from 'antd';
 import {Col, Row} from "antd/es";
 import {connect} from 'react-redux';
 import { RootState } from 'FeatchainTypes';
@@ -20,6 +20,13 @@ export class BecomeAuthorityScreen extends React.Component<Props, State> {
 
   componentDidMount(): void {
     if (isIssuerAccount(this.props.account.details)) {
+
+      notification.warning({
+        message: "Humm...",
+        description: "You are already an issuer",
+        placement: "bottomRight",
+      });
+
       this.props.history.push(getPath("account"));
       return;
     }

@@ -21,7 +21,7 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & Ro
 
 export class FeatsReceived extends React.Component<Props, State> {
 
-    defaultProps = {
+    static defaultProps = {
         isLoading: false,
     };
 

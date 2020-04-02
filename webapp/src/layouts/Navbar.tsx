@@ -11,13 +11,43 @@ import {
 } from "../features/featchain/actions/account";
 import {connect} from "react-redux";
 import { RootState } from 'FeatchainTypes';
+import {Location, UnregisterCallback} from "history";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteComponentProps<any>;
 
 type State = {
+    activeKeys: string[];
 };
 
 export class Navbar extends React.Component<Props, State> {
+
+    unsubscribe!: UnregisterCallback;
+
+    readonly state = {
+      activeKeys: [],
+    };
+
+    componentDidMount() {
+        this.unsubscribe = this.props.history.listen(location => this.setState({ activeKeys: this.getActiveMenuKeys(location) }));
+
+        this.setState({ activeKeys: this.getActiveMenuKeys(this.props.location) });
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
+    getActiveMenuKeys = (location: Location): string[] => {
+
+        switch (location.pathname) {
+            case getPath('verifyAccount'): return ['verifyAccount'];
+            case getPath('createAccount'): return ['createAccount'];
+            case getPath('signIn'): return ['signIn'];
+            case getPath('account'): return ['account'];
+
+            default: return ['home'];
+        }
+    };
 
     logout = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -36,11 +66,11 @@ export class Navbar extends React.Component<Props, State> {
                 </span>
             }
         >
-            <Menu.Item>
+            <Menu.Item key='createAccount'>
                 <UserAddOutlined/>
                 <Link to={getPath('createAccount')}>Create an account</Link>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item key='signIn'>
                 <LoginOutlined/>
                 <Link to={getPath('signIn')}>Sign in</Link>
             </Menu.Item>
@@ -50,11 +80,12 @@ export class Navbar extends React.Component<Props, State> {
     renderConnectedAccountMenu = () => {
         return <SubMenu
             key="account"
+            onTitleClick={() => this.props.history.push(getPath('account'))}
             title={
-                <Link to={getPath('account')}><UserOutlined/> Account</Link>
+                <span><UserOutlined/> Account</span>
             }
         >
-            <Menu.Item>
+            <Menu.Item key='signIn'>
                 <LoginOutlined/>
                 <a href={getPath('signIn')} onClick={this.logout}>Logout</a>
             </Menu.Item>
@@ -66,10 +97,10 @@ export class Navbar extends React.Component<Props, State> {
             theme="dark"
             mode="horizontal"
             style={{lineHeight: '64px', float: 'right'}}
-            defaultSelectedKeys={["home"]}
+            selectedKeys={this.state.activeKeys}
+            forceSubMenuRender={true}
         >
             <Menu.Item key="home"><Link to={getPath('home')}>Featchain</Link></Menu.Item>
-            <Menu.Item key="authority"><Link to={getPath('becomeAuthority')}>Become an authority</Link></Menu.Item>
             <Menu.Item key="verifyAccount"><Link to={getPath('verifyAccount')}>Verify an account</Link></Menu.Item>
             {this.props.account.passphrase ? this.renderConnectedAccountMenu() : this.renderAnonymousAccountMenu()}
         </Menu>

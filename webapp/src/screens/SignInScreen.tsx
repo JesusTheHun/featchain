@@ -32,7 +32,7 @@ export class AuthorityNew extends React.Component<Props, State> {
 
     return <MainLayout>
       <Typography.Title className={'uk-text-center'}>
-        <FormattedMessage id="hi" defaultMessage={"Login"}/>
+        <FormattedMessage id="hi" defaultMessage={"Sign In"}/>
       </Typography.Title>
 
       <Row justify={'center'} className={'uk-margin-large-top'}>

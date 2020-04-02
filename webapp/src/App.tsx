@@ -23,15 +23,17 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <Switch>
             <Route exact path={getPath('home')} component={HomeScreen} />
-            <Route exact path={getPath('createAccount')} component={CreateAccountScreen} />
+            <Route exact path={getPath('verifyAccount', ':address?')} component={VerifyAccountScreen} />
             <Route exact path={getPath('signIn')} component={SignInScreen}/>
+            <Route exact path={getPath('createAccount')} component={CreateAccountScreen} />
+
+            <Route exact path={getPath('authority', ':issuerId?')} component={IssuerScreen} />
+            <Route exact path={getPath('featType', ':featTypeId?')} component={FeatTypeScreen} />
+
+            <Route exact path={getPath('account')} component={AccountScreen} />
             <Route exact path={getPath('becomeAuthority')} component={BecomeAuthorityScreen} />
             <Route exact path={getPath('createFeatType')} component={CreateFeatTypeScreen} />
-            <Route exact path={getPath('account')} component={AccountScreen} />
             <Route exact path={getPath('award', ':featTypeId')} component={AwardFeatScreen} />
-            <Route exact path={getPath('verifyAccount', ':address?')} component={VerifyAccountScreen} />
-            <Route exact path={getPath('featType', ':featTypeId?')} component={FeatTypeScreen} />
-            <Route exact path={getPath('authority', ':issuerId?')} component={IssuerScreen} />
 
             <Route component={Http404Screen} />
           </Switch>
