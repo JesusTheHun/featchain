@@ -39,8 +39,8 @@ export interface PersonAsset {
  */
 export interface Award {
     featTypeId: FeatTypeId;
-    date: number;
-    comment: string;
+    date?: number;
+    comment?: string;
 }
 
 export interface CreateIssuerTransactionAsset {
@@ -59,7 +59,7 @@ export interface CreateFeatTypeTransactionAsset {
 export interface AwardFeatTransactionAsset {
     featTypeId: FeatTypeId;
     addresses: Array<Address>;
-    date: number;
-    comment: string;
+    date?: number;
+    comment?: string;
     amount: string;
 }

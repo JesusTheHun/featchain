@@ -124,6 +124,113 @@ describe('AwardFeatTransaction', () => {
         expect(storeStub.account.set.mock.calls[2][1]).toEqual(expectedAccount2);
     });
 
+    test('it should apply the state to add the award to the persons account despite the missing date', async () => {
+        // Arrange
+        const senderId = '16313739661670634666L';
+        const senderPublicKey = 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f';
+        const asset: AwardFeatTransactionAsset = {
+            featTypeId: 'someFeatType',
+            addresses: ['a', 'b'],
+            comment: "Wassup dawg ?",
+            amount: utils.convertLSKToBeddows('20'),
+        };
+
+        const mockedSenderAccount: Partial<IssuerAccount> = {
+            address: senderId,
+            balance: utils.convertLSKToBeddows('10000'),
+            asset: {
+                title: "DappIT",
+                description: "A distributed and decentralized software company",
+                authorityUrl: "http://dappit.fr",
+                featTypes: {
+                    "someFeatType": {
+                        id: "someFeatType",
+                        title: "You've been a good boy",
+                        description: "Here is a sugar",
+                        awardCount: '0'
+                    }
+                }
+            }
+        };
+
+        const mockedAwardAccount1 = {
+            address: 'a',
+            balance: utils.convertLSKToBeddows('0'),
+        };
+
+        const mockedAwardAccount2 = {
+            address: 'b',
+            balance: utils.convertLSKToBeddows('0'),
+        };
+
+        when(storeStub.account.get)
+            .calledWith(senderId)
+            .mockReturnValue(mockedSenderAccount);
+
+        when(storeStub.account.get)
+            .calledWith(mockedAwardAccount1.address)
+            .mockReturnValue(mockedAwardAccount1);
+
+        when(storeStub.account.get)
+            .calledWith(mockedAwardAccount2.address)
+            .mockReturnValue(mockedAwardAccount2);
+
+        // Act
+        const tx = new AwardFeatTransaction({
+            id: "foo",
+            senderId,
+            senderPublicKey,
+            asset,
+        });
+
+        const validationErrors = tx.validateAsset();
+        expect(validationErrors).toHaveLength(0);
+
+        tx.applyAsset(storeStub);
+
+        const expectedSenderAccount = {
+            ...mockedSenderAccount,
+            balance: utils.convertLSKToBeddows('9980'),
+        };
+
+        expectedSenderAccount.asset.featTypes.someFeatType.awardCount = '2';
+
+        const expectedAccount1: Partial<PersonAccount> = {
+            ...mockedAwardAccount1,
+            asset: {
+                awardsReceived: {
+                    [tx.id]: {
+                        featTypeId: 'someFeatType',
+                        comment: "Wassup dawg ?",
+                    }
+                }
+            }
+        };
+
+        const expectedAccount2: Partial<PersonAccount> = {
+            ...mockedAwardAccount2,
+            asset: {
+                awardsReceived: {
+                    [tx.id]: {
+                        featTypeId: 'someFeatType',
+                        comment: "Wassup dawg ?",
+                    }
+                }
+            }
+        };
+
+        // Assert
+        expect(storeStub.account.set.mock.calls[0][0]).toEqual(mockedSenderAccount.address);
+        expect(storeStub.account.set.mock.calls[0][1]).toEqual(expectedSenderAccount);
+
+        expect(storeStub.account.set.mock.calls[1][0]).toEqual(mockedAwardAccount1.address);
+        expect(storeStub.account.set.mock.calls[1][1]).toEqual(expectedAccount1);
+
+        expect(storeStub.account.set.mock.calls[2][0]).toEqual(mockedAwardAccount2.address);
+        expect(storeStub.account.set.mock.calls[2][1]).toEqual(expectedAccount2);
+    });
+
+
     test('it should FAIL apply the state if the award is not found', async () => {
         // Arrange
         const senderId = '16313739661670634666L';
