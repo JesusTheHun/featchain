@@ -1,6 +1,6 @@
 {
   "name": "featchain-blockchain",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The achievement blockchain",
   "main": "dist/src/transactions/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "start": "node dist/src/index.js",
     "prebuild": "if test -d dist; then rm -r dist; fi; rm -f tsconfig.tsbuildinfo",
     "build": "tsc",
-    "docker-build": "docker build . -t featchain-blockchain",
+    "docker-build": "docker build . -t jesusthehun/featchain-blockchain",
     "test": "jest"
   },
   "engines": {

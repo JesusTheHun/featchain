@@ -60,7 +60,7 @@
     "start": "react-app-rewired start",
     "prebuild": "NODE_ENV=production node env2config public/config.js",
     "build": "react-app-rewired build",
-    "docker-build": "docker build . -t featchain-webapp",
+    "docker-build": "docker build . -t jesusthehun/featchain-webapp",
     "pretest": "NODE_ENV=test node env2config public/config.js",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
