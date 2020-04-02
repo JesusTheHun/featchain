@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import _ from 'lodash';
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
@@ -7,9 +8,9 @@ if (process.env.NODE_ENV !== 'production') {
 import { Application, genesisBlockDevnet, configDevnet } from 'lisk-sdk';
 import appConfig from './config/devnet';
 import {CreateIssuerTransaction, CreateFeatTypeTransaction, AwardFeatTransaction} from "./transactions";
-import {FaucetTransaction} from "lisk-transaction-faucet/dist";
+import {FaucetTransaction} from "lisk-transaction-faucet";
 
-const config = {...configDevnet, ...appConfig};
+const config = _.merge(configDevnet, appConfig);
 
 try {
 

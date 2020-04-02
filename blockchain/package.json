@@ -25,9 +25,10 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@liskhq/lisk-transactions": "3.0.2",
+    "dotenv": "^8.2.0",
     "lisk-sdk": "3.0.2",
     "lisk-transaction-faucet": "^1.0.4",
-    "dotenv": "^8.2.0"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
