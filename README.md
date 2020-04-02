@@ -29,12 +29,13 @@ npm start
 docker-compose up -d
 ```
 
+You can then access to the interface at http://localhost:8080
+
 If you use a docker machine and therefore you do not access containers services through `localhost` you have to change the environment variable in `.env` to set the correct value.
 
 ```bash
 PUBLIC_API_URL=http://docker_machine:4000
 ```
- 
 
 ### Build With
 
