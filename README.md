@@ -10,21 +10,28 @@ This project is build using the [Lisk](https://lisk.io) SDK. You can follow thei
 
 ### Installing from sources
 
-Then install dependencies using your favorite package manager :
+Edit `blockchain/.env` to match your system installation of Postgres.
+Then :
 
 ```bash
+cd blockchain
 nvm use
-yarn install
+npm i
+npm start
+cd ../webapp
+yarn
+npm start
 ```
 
-### Installing from Docker
-
-You can use the image from the Docker Hub :
+### Installing from Docker Compose
 
 ```bash
-docker run --name featchain jesusthehun/featchain
+docker-compose up -d
 ```
 
+If you use a docker machine and therefore you do not access containers services through localhost 
+you have to change the environment variable in `docker-compose.yml` (or create a `docker-compose.yml.local`) to set the correct value.
+This is due to ReactJS substitution happening at compile time and not runtime. 
 
 ### Build With
 

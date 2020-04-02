@@ -19,7 +19,7 @@ const getBlockchainTimestamp = () => {
 };
 
 const client = APIClient.createTestnetAPIClient({
-  node: process.env.REACT_APP_FEATCHAIN_BASEURL,
+  node: window.APP_CONFIG.REACT_APP_FEATCHAIN_BASEURL,
 });
 
 export function fetchAccountDetails<T = AccountDetails>(address: string): Promise<T> {

@@ -17,8 +17,8 @@ export const initialState: AccountState = {
     isLoading: false,
     waitingConversion: false,
     entity: {
-        address: process.env.REACT_APP_FEATCHAIN_DEFAULT_ACCOUNT_ADDRESS,
-        passphrase: process.env.REACT_APP_FEATCHAIN_DEFAULT_ACCOUNT_PASSPHRASE,
+        address: window.APP_CONFIG.REACT_APP_FEATCHAIN_DEFAULT_ACCOUNT_ADDRESS,
+        passphrase: window.APP_CONFIG.REACT_APP_FEATCHAIN_DEFAULT_ACCOUNT_PASSPHRASE,
     },
 };
 

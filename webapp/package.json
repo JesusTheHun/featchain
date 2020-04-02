@@ -56,9 +56,12 @@
     "yup": "^0.28.0"
   },
   "scripts": {
+    "prestart": "node env2config public/config.js",
     "start": "react-app-rewired start",
+    "prebuild": "NODE_ENV=production node env2config public/config.js",
     "build": "react-app-rewired build",
     "docker-build": "docker build . -t featchain-webapp",
+    "pretest": "NODE_ENV=test node env2config public/config.js",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "prettier": "prettier --list-different 'src/**/*.ts' || (echo '\nPlease run the following command to fix:\nnpm run prettier:fix\n'; exit 1)",
