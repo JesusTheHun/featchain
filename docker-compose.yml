@@ -1,8 +1,9 @@
 version: '3'
 services:
     webapp:
-        image: featchain-webapp
+        image: jesusthehun/featchain-webapp
         build: webapp
+        restart: unless-stopped
         depends_on:
           - blockchain
         environment:
@@ -11,7 +12,7 @@ services:
         - '8080:4000'
 
     blockchain:
-        image: featchain-blockchain
+        image: jesusthehun/featchain-blockchain
         build: blockchain
         restart: unless-stopped
         entrypoint: ["/home/lisk/wait-for-it.sh", "db:5432", "--", "node", "/home/lisk/lisk/dist/src/index.js"]

@@ -59,10 +59,12 @@ export class AwardFeatTransaction extends BaseTransaction {
             errors.push(new transactions.TransactionError(`At least one account should be awarded`));
         }
 
-        const time = new Date(this.asset.date).getTime();
+        if (this.asset.date) {
+            const time = new Date(this.asset.date).getTime();
 
-        if (isNaN(time)) {
-            errors.push(new transactions.TransactionError(`Invalid date, should be a valid JS Date`));
+            if (isNaN(time)) {
+                errors.push(new transactions.TransactionError(`Invalid date, should be a valid JS Date`));
+            }
         }
 
         return errors;
