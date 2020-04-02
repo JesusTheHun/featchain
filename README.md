@@ -29,9 +29,13 @@ npm start
 docker-compose up -d
 ```
 
-If you use a docker machine and therefore you do not access containers services through localhost 
-you have to change the environment variable in `docker-compose.yml` (or create a `docker-compose.yml.local`) to set the correct value.
-This is due to ReactJS substitution happening at compile time and not runtime. 
+If you use a docker machine and therefore you do not access containers services through `localhost`
+
+```bash
+PUBLIC_API_URL=http://docker_machine:4000
+```
+ 
+you have to change the environment variable in `.env` to set the correct value.
 
 ### Build With
 
