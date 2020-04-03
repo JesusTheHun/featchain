@@ -39,6 +39,7 @@ export class FeatsReceived extends React.Component<Props, State> {
 
     render() {
         if (!isPersonAccount(this.props.account)) return this.renderEmptyFeatList();
+        if (!this.props.account.asset.awardsReceived) return this.renderEmptyFeatList();
 
         const account = this.props.account as PersonAccount;
         const data: Array<Award & { title: string }> = [];

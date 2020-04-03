@@ -39,11 +39,11 @@ export class Navbar extends React.Component<Props, State> {
 
     getActiveMenuKeys = (location: Location): string[] => {
 
-        switch (location.pathname) {
-            case getPath('verifyAccount'): return ['verifyAccount'];
-            case getPath('createAccount'): return ['createAccount'];
-            case getPath('signIn'): return ['signIn'];
-            case getPath('account'): return ['account'];
+        switch (true) {
+            case location.pathname.substr(0, getPath('verifyAccount').length) === getPath('verifyAccount'): return ['verifyAccount'];
+            case location.pathname === getPath('createAccount'): return ['createAccount'];
+            case location.pathname === getPath('signIn'): return ['signIn'];
+            case location.pathname === getPath('account'): return ['account'];
 
             default: return ['home'];
         }

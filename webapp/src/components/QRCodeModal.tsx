@@ -25,8 +25,11 @@ export class QRCodeModal extends React.Component<Props, State> {
     };
 
     render() {
+
+        const qrcodeURL = window.APP_CONFIG.REACT_APP_FEATCHAIN_FRONT_URL + getPath('verifyAccount', this.props.address);
+
         return <div className="uk-text-center">
-            <QRCode value={getPath('verifyAccount', this.props.address)} size={256}/>
+            <QRCode value={qrcodeURL} size={256}/>
             <div className="uk-margin-medium-top">
                 <Button type='primary' icon={<DownloadOutlined />} onClick={this.download}>Download</Button>
             </div>

@@ -19,7 +19,7 @@ const getBlockchainTimestamp = () => {
 };
 
 const client = APIClient.createTestnetAPIClient({
-  node: window.APP_CONFIG.REACT_APP_FEATCHAIN_BASEURL,
+  node: window.APP_CONFIG.REACT_APP_FEATCHAIN_API_URL,
 });
 
 export function fetchAccountDetails<T = AccountDetails>(address: string): Promise<T> {
@@ -57,6 +57,11 @@ export async function fetchFeatsReceived(address: string): Promise<{
   featsReceived: FeatsReceived;
 }> {
   const account = await fetchAccountDetails<PersonAccount>(address);
+
+  if (!account.asset.awardsReceived) {
+    const empty = {} as FeatsReceived;
+    return { account, featsReceived: empty };
+  }
 
   const p = Object.values(account.asset.awardsReceived).map((award: Award) => {
     return fetchTransaction<CreateFeatTypeTransaction>(award.featTypeId);

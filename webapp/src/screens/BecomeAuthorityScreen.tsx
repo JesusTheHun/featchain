@@ -67,18 +67,22 @@ export class BecomeAuthorityScreen extends React.Component<Props, State> {
                   {...layout}
                   className="login-form"
                   onFinish={this.onFinish}
+                  initialValues={{
+                    balance: this.props.account.details ? utils.convertBeddowsToLSK(this.props.account.details.balance) : 0,
+                    cost: utils.convertBeddowsToLSK(fees.createIssuer) || 0,
+                  }}
             >
               <Form.Item
                   label="Account balance"
                   name="balance"
               >
-                <Input type="in" defaultValue={this.props.account.details ? utils.convertBeddowsToLSK(this.props.account.details.balance) : 0} disabled />
+                <Input type="in" disabled />
               </Form.Item>
               <Form.Item
                   label="Cost"
                   name="cost"
               >
-                <Input type="in" defaultValue={utils.convertBeddowsToLSK(fees.createIssuer) || 0} disabled />
+                <Input type="in" disabled />
               </Form.Item>
 
               <Form.Item

@@ -98,7 +98,7 @@ export class CreateAccountScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => ({});
 const mapDispatchToProps = {
   setAccountCredentials,
   faucet: faucetAsync.request,

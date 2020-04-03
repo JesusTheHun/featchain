@@ -14,7 +14,7 @@ type State = {
 
 type Props = typeof mapDispatchToProps & RouteComponentProps<any>;
 
-export class AuthorityNew extends React.Component<Props, State> {
+export class SignInScreen extends React.Component<Props, State> {
 
   onFinish = (values: any) => {
     const { publicKey, address } = lisk.cryptography.getAddressAndPublicKeyFromPassphrase(values.passphrase);
@@ -64,9 +64,9 @@ export class AuthorityNew extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => ({});
 const mapDispatchToProps = {
   setAccountCredentials,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AuthorityNew));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignInScreen));
