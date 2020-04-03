@@ -4,8 +4,8 @@ const files = [];
 const env = {};
 
 switch (process.env.NODE_ENV) {
-    case 'production': files.push('.env.production', '.env.production.local');
-    case 'test': files.push('.env.test', '.env.test.local');
+    case 'production': files.push('.env.production', '.env.production.local'); break;
+    case 'test': files.push('.env.test', '.env.test.local'); break;
     case 'development':
     default: files.push('.env.development', '.env.development.local');
 }

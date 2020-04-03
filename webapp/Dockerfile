@@ -1,25 +1,32 @@
-FROM node:12.15.0-alpine as build
+FROM node:12.15.0-alpine as base
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-
 RUN apk --no-cache upgrade && apk --no-cache add alpine-sdk python2 libtool autoconf automake git
-COPY . /app
+
+
+FROM base as build
+WORKDIR /app
+COPY . ./
 
 RUN yarn
 RUN npm run build
 
 
-FROM node:12.15.0-alpine as deps
+FROM base as deps
 WORKDIR /app
 
+COPY package.json yarn.lock ./
 RUN yarn install --production
 
 FROM node:12.15.0-alpine
 WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
 
 COPY --from=deps /app/node_modules ./node_modules/
 COPY --from=build /app/build ./build/
-EXPOSE 4000
+COPY env2config.js ./
+
+EXPOSE 3000
 
 RUN yarn global add serve
-CMD serve -s build -l 4000
+CMD serve -s build -l 3000
