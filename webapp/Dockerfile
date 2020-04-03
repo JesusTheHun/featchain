@@ -29,4 +29,4 @@ COPY env2config.js ./
 EXPOSE 3000
 
 RUN yarn global add serve
-CMD serve -s build -l 3000
+CMD node env2config.js build/config.js && serve -s build -l 3000
