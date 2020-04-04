@@ -26,6 +26,8 @@ npm start
 ### Installing from Docker Compose
 
 ```bash
+docker pull jesusthehun/featchain-blockchain
+docker pull jesusthehun/featchain-webapp
 docker-compose up -d
 ```
 
