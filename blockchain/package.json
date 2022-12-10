@@ -26,7 +26,7 @@
   "dependencies": {
     "@liskhq/lisk-transactions": "3.0.2",
     "dotenv": "^8.2.0",
-    "lisk-sdk": "3.0.2",
+    "lisk-sdk": "5.2.2",
     "lisk-transaction-faucet": "^1.0.4",
     "lodash": "^4.17.15"
   },
