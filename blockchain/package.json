@@ -24,9 +24,9 @@
   "author": "Jonathan MASSUCHETTI",
   "license": "GPL-3.0",
   "dependencies": {
-    "@liskhq/lisk-transactions": "3.0.2",
+    "@liskhq/lisk-transactions": "5.2.2",
     "dotenv": "^8.2.0",
-    "lisk-sdk": "3.0.2",
+    "lisk-sdk": "5.2.2",
     "lisk-transaction-faucet": "^1.0.4",
     "lodash": "^4.17.15"
   },
